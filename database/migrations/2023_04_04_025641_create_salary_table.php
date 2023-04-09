@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('salary', function (Blueprint $table) {
             $table->id();
-            $table->string('permission_name');
-            $table->string('description')->nullable();
+            $table->integer('employee_id');
+            $table->date('month');
+            $table->year('year');
+            $table->float('overtime');
+            $table->string('leave_days');
+            $table->double('total_salary');
+            $table->double('bonus');
+            $table->double('basic_salary');
             $table->timestamps();
         });
     }
@@ -24,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('salary');
     }
 };

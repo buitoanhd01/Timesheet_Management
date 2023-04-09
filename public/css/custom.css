@@ -1,0 +1,10 @@
+.custom-datepicker {
+    width: 115px;
+    border: 2px solid #d4d4d4;
+    height: 35px;
+    border-radius: 10px;
+}
+
+.calendar-tab {
+    cursor: pointer;
+}
