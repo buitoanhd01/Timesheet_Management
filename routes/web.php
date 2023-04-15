@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'status']], function () {
     Route::group(['middleware' => ['role:admin']], function () {

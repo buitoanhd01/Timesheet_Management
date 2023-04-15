@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('salary', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id');
-            $table->date('month');
-            $table->year('year');
-            $table->float('overtime');
-            $table->string('leave_days');
-            $table->double('total_salary');
-            $table->double('bonus');
-            $table->double('basic_salary');
+            $table->date('month')->nullable();
+            $table->year('year')->nullable();
+            $table->float('overtime')->nullable();
+            $table->string('leave_days')->nullable();
+            $table->double('total_salary')->nullable();
+            $table->double('bonus')->nullable();
+            $table->double('basic_salary')->nullable();
             $table->timestamps();
         });
     }

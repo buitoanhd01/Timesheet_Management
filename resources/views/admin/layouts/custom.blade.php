@@ -25,12 +25,12 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico')}}" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    {{-- <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
-    />
+    /> --}}
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}" />
@@ -80,7 +80,7 @@
             <!-- Content -->
 
             @yield('content')
-            
+            @include('admin.include.modal')
             <!-- / Content -->
 
             <!-- Footer -->
@@ -99,14 +99,15 @@
     </div>
     <!-- / Layout wrapper -->
 
-
+    <input type="hidden" id="get_self_check_status" value="{{ route('get_self_check_status') }}">
+    <input type="hidden" id="update_list_calendar" value="{{ route('update_list_calendar') }}">
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-
+    <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
@@ -142,13 +143,11 @@
             
           item.classList.add('active');
       
-          // Lưu trạng thái active vào Local Storage
-        localStorage.setItem('activeMenuItem', item.children[0].getAttribute('href'));
         });
       });
       
       // Kiểm tra nếu đã có trạng thái active được lưu trữ trong Local Storage
-      const activeMenuItem = localStorage.getItem('activeMenuItem');
+      const activeMenuItem = window.location.href;
       if (activeMenuItem) {
         // Thêm class active vào menu item có id được lưu trữ trong Local Storage
         let children = document.querySelector('a[href="' + activeMenuItem +'"]');
@@ -160,7 +159,7 @@
 
     @yield('scripts')
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    {{-- <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
   </body>
 </html>

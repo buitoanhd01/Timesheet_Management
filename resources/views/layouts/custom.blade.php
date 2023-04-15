@@ -24,13 +24,13 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico')}}" />
 
-    <!-- Fonts -->
+    {{-- <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
-    />
+    /> --}}
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}" />
@@ -46,6 +46,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js')}}"></script>
@@ -83,6 +84,7 @@
             <!-- Content -->
 
             @yield('content')
+            @include('include.modal')
             
             <!-- / Content -->
 
@@ -102,7 +104,8 @@
     </div>
     <!-- / Layout wrapper -->
 
-
+    <input type="hidden" id="get_self_check_status" value="{{ route('get_self_check_status') }}">
+    <input type="hidden" id="update_list_calendar" value="{{ route('update_list_calendar') }}">
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
@@ -124,5 +127,6 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
   </body>
 </html>

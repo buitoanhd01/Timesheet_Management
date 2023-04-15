@@ -14,22 +14,22 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->char('employee_code', 10);
-            $table->integer('user_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('full_name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('address');
-            $table->date('birthday');
-            $table->string('gender');
-            $table->date('start_time');
-            $table->date('end_time');
-            $table->string('tax_code');
-            $table->string('employee_type');
-            $table->integer('position_id');
-            $table->integer('salary_id');
-            $table->integer('department_id');
+            $table->integer('user_id')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('gender')->nullable();
+            $table->date('start_time')->nullable();
+            $table->date('end_time')->nullable();
+            $table->string('tax_code')->nullable();
+            $table->string('employee_type')->nullable();
+            $table->integer('position_id')->nullable();
+            $table->integer('salary_id')->nullable();
+            $table->integer('department_id')->nullable();
             $table->timestamps();
         });
     }

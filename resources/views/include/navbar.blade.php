@@ -26,15 +26,13 @@
         <ul class="navbar-nav flex-row align-items-center ms-auto">
         <!-- Place this tag where you want the button to render. -->
         <li class="nav-item lh-1 me-3">
-            <a
-            class="github-button"
-            href=""
-            data-icon="octicon-star"
-            data-size="large"
-            data-show-count="true"
-            aria-label=""
-            >Star</a
-            >
+            <div id="clock">8:10:45</div>
+        </li>
+
+        <li class="nav-item lh-1 me-3 btn-check-in-out">
+            <button type="button" class="btn btn-warning btn-attendance visually-hidden" id="btn_check_in" data-check="check_in">Check In</button>
+            <button type="button" class="btn btn-success" id="btn_checked_in">Checked In</button>
+            <button type="button" class="btn btn-danger btn-attendance" id="btn_check_out" disabled data-check="check_out">Check Out</button>
         </li>
 
         <!-- User -->

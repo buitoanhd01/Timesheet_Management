@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_id');
-            $table->date('leave_date_start');
-            $table->date('leave_date_end');
-            $table->dateTime('leave_time_start');
-            $table->dateTime('leave_time_end');
-            $table->tinyInteger('leave_type');
-            $table->string('leave_reason');
-            $table->tinyInteger('status')->default(0);
+            $table->integer('employee_id',10)->autoIncrement(FALSE);
+            $table->dateTime('leave_date_start')->nullable();
+            $table->dateTime('leave_date_end')->nullable();
+            $table->boolean('leave_type', 1)->nullable();
+            $table->text('leave_reason')->nullable();
+            $table->boolean('status', 1)->default(0);
             $table->timestamps();
         });
     }

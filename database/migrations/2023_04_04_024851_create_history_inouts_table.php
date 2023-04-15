@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('history_inouts', function (Blueprint $table) {
             $table->id();
-            $table->integer('record_ttlock_id');
-            $table->dateTime('time');
-            $table->tinyInteger('type');
-            $table->integer('staff_id');
+            $table->integer('record_ttlock_id')->nullable();
+            $table->dateTime('time')->nullable();
+            $table->boolean('type', 1)->nullable();
+            $table->integer('employee_id',10)->autoIncrement(FALSE);
             $table->timestamps();
         });
     }

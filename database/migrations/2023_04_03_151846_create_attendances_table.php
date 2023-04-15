@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->integer('employee_id');
-            $table->dateTime('first_checkin');
-            $table->dateTime('last_checkout');
+            $table->dateTime('first_checkin')->nullable();
+            $table->dateTime('last_checkout')->nullable();
             $table->float('working_hours')->nullable();
             $table->float('overtime')->nullable();
-            $table->tinyInteger('status')->default(0)->comment('0: Late ,1: Early, 2: Late/early');
-            $table->string('notes', 255);
+            $table->boolean('status')->default(0)->comment('0: Late ,1: Early, 2: Late/early');
+            $table->string('notes', 255)->nullable();
             $table->timestamps();
         });
     }

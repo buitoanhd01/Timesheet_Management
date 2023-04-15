@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth:sanctum')->get('/get_list_calendar', [App\Http\Controllers\Api\CalendarController::class, 'index'])
+Route::get('/get_list_calendar', [App\Http\Controllers\Api\CalendarController::class, 'index'])
 ->name('get_list_calendar');
 
+Route::post('/update_list_calendar', [App\Http\Controllers\Api\CalendarController::class, 'insertAttendance'])
+->name('update_list_calendar');
+
+Route::get('/get_self_check_status', [App\Http\Controllers\Api\CalendarController::class, 'getSelfAttendanceNow'])
+->name('get_self_check_status');
