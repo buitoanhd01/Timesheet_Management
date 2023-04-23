@@ -1,3 +1,8 @@
+    @php
+        $user_id = auth()->user()->id;
+        $user = DB::table('employees')->where('user_id', $user_id)->first();
+        $role = auth()->user()->roles[0]->name;
+    @endphp
     <nav
     class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar"
@@ -10,7 +15,7 @@
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Search -->
-        <div class="navbar-nav align-items-center">
+        {{-- <div class="navbar-nav align-items-center">
         <div class="nav-item d-flex align-items-center">
             <i class="bx bx-search fs-4 lh-0"></i>
             <input
@@ -20,7 +25,7 @@
             aria-label="Search..."
             />
         </div>
-        </div>
+        </div> --}}
         <!-- /Search -->
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -30,16 +35,16 @@
         </li>
 
         <li class="nav-item lh-1 me-3 btn-check-in-out">
-            <button type="button" class="btn btn-warning btn-attendance visually-hidden" id="btn_check_in" data-check="check_in">Check In</button>
-            <button type="button" class="btn btn-success" id="btn_checked_in">Checked In</button>
-            <button type="button" class="btn btn-danger btn-attendance" id="btn_check_out" disabled data-check="check_out">Check Out</button>
+            <button type="button" class="btn btn-warning btn-attendance visually-hidden btn-sm" style="padding: 4px 18px" id="btn_check_in" data-check="check_in">Check In</button>
+            <button type="button" class="btn btn-success btn-sm" id="btn_checked_in">Checked In</button>
+            <button type="button" class="btn btn-danger btn-attendance btn-sm" id="btn_check_out" disabled data-check="check_out" style="padding: 4px 13px;">Check Out</button>
         </li>
 
         <!-- User -->
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
             <div class="avatar avatar-online">
-                <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
             </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -48,12 +53,12 @@
                 <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
                     <div class="avatar avatar-online">
-                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                     </div>
                     <div class="flex-grow-1">
-                    <span class="fw-semibold d-block">John Doe</span>
-                    <small class="text-muted">Admin</small>
+                    <span class="fw-semibold d-block text-capitalize">{{ $user->full_name }}</span>
+                    <small class="text-muted text-capitalize">{{ $role }}</small>
                     </div>
                 </div>
                 </a>
@@ -86,7 +91,8 @@
                 <div class="dropdown-divider"></div>
             </li>
             <li>
-                <a class="dropdown-item" href="{{ route('logout') }}">
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                 <i class="bx bx-power-off me-2"></i>
                 <span class="align-middle">Log Out</span>
                 </a>
@@ -97,3 +103,6 @@
         </ul>
     </div>
     </nav>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>

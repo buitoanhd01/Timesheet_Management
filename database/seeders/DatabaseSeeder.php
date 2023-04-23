@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -16,33 +19,63 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@mail.com',
+        // \App\Models\User::factory()->create([
+        //     'username' => 'admin',
+        //     'password' => bcrypt('1234567890'),
+        //     'role_id' => '1'
+        // ]);
+        // \App\Models\User::factory()->create([
+        //     'username' => 'emloyee',
+        //     'password' => bcrypt('1234567890'),
+        //     'status' => 'active',
+        // ]);
+
+        $user = new User([
+            'username' => 'admin',
             'password' => bcrypt('1234567890'),
-            'role_id' => '1'
+            'status' => 'active',
         ]);
-        \App\Models\User::factory()->create([
-            'name' => 'emloyee',
-            'email' => 'emloyee@mail.com',
+
+        $user2 = new User([
+            'username' => 'employee',
             'password' => bcrypt('1234567890'),
-            'role_id' => '2'
+            'status' => 'active',
         ]);
-        // Tạo role
-        $role = Role::create(['name' => 'admin']);
-
-        // Tạo permission
-        $permission = Permission::create(['name' => 'manage-users']);
-
-        // Gán permission cho role
-        $role->givePermissionTo($permission);
-
-        $role2 = Role::create(['name' => 'employee']);
-
-        // Tạo permission
-        $permission2 = Permission::create(['name' => 'using']);
-
-        // Gán permission cho role
-        $role2->givePermissionTo($permission2);
+        $user->save();
+        $user2->save();
+        $employee = new Employee([
+            'first_name'    =>  'Toan',
+            'last_name'     =>  'Bui',
+            'full_name'     =>  'Bui Toan',
+            'email'         =>  'toan@mail.com',
+            'employee_code' =>  'NV001',
+            'tax_code'      =>  '15121711',
+            'phone'         =>  '0383388222',
+            'address'       =>  'HD',
+            'birthday'      =>  '2001-12-15',
+            'gender'        =>  'male',
+            'start_time'    =>  '2001-12-15',
+            'employee_type' =>  'official',
+            'position_id'   =>  1,
+            'department_id' =>  1,
+            'status'        => 'working',
+            'user_id'       =>  1, 
+        ]);
+        $employee->save();
+        Permission::create(['name' => 'manage-request']);
+        Permission::create(['name' => 'manage-general']);
+        Permission::create(['name' => 'manage-calendar']);
+        Permission::create(['name' => 'manage-employee']);
+        Permission::create(['name' => 'manage-user']);
+        Permission::create(['name' => 'manage-department']);
+        Permission::create(['name' => 'manage-salary']);
+        Permission::create(['name' => 'using']);
+        Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'employee']);
+        $user->assignRole('super-admin');
+        $user2->assignRole('employee');
+        // $user->givePermissionTo(Permission::all());
+        $user2->givePermissionTo('using');
     }
 }

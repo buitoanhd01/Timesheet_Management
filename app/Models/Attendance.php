@@ -33,10 +33,13 @@ class Attendance extends Model
         'note'
     ];
 
+
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
     }
+
+
 
     public static function InsertOrUpdateAttendance($param)
     {
@@ -65,9 +68,11 @@ class Attendance extends Model
         );
     }
 
+
+
     public static function getWorkingHours($date, $data) {
         $firstCheckIn = self::select('first_checkin')->where(['date'=> $date, 'employee_id' => $data['employee_id']])->value('first_checkin');
-        if (isset($data) && !is_null($data)) {
+        if (isset($firstCheckIn) && isset($data['last_checkout'])) {
             if ($firstCheckIn != 'null' && $data['last_checkout'] != 'null') {
                 $firstCheckIn = date('H:i:s', strtotime($firstCheckIn));
                 $data['last_checkout'] = date('H:i:s', strtotime($data['last_checkout']));
@@ -90,8 +95,10 @@ class Attendance extends Model
         return $workingHours / (60 * 60);
     }
 
+
+
     public static function getOverTime($data) {
-        if (isset($data) && !is_null($data)) {
+        if (isset($data['last_checkout'])) {
             if ($data['last_checkout'] != 'null') {
                 $data['last_checkout'] = date('H:i:s', strtotime($data['last_checkout']));
                 $checkOutToTime = strtotime($data['last_checkout']);
@@ -111,6 +118,8 @@ class Attendance extends Model
         return $overTiming / (60 * 60);
     }
 
+
+
     public static function getStatus($data) {
         $timeArrivalLate = strtotime('08:30:00');
         $timeLeaveEarly = strtotime('17:30:00');
@@ -125,17 +134,22 @@ class Attendance extends Model
         if (isset($data['last_checkout']) && $data['last_checkout'] != 'null') {
             $data['last_checkout'] = date('H:i:s', strtotime($data['last_checkout']));
             $checkOutToTime = strtotime($data['last_checkout']);
-            $statusOld = self::select('status')->where(['date'=> $data['date'], 'employee_id' => $data['employee_id']])->value('status');
-            $status = $statusOld;
+            $statusTmp = self::select('status', 'first_checkin')->where(['date'=> $data['date'], 'employee_id' => $data['employee_id']])->first();
+            $checkInToTime = strtotime($statusTmp['first_checkin']);
+            if ($checkInToTime > $timeArrivalLate) {
+                $status = self::ARRIVAL_LATE;
+            }
             if ($checkOutToTime < $timeLeaveEarly) {
                 $status = self::LEAVE_EARLY;
-                if ($statusOld == self::ARRIVAL_LATE) {
-                    $status = self::BOTH;
-                }
+            }
+            if ($checkInToTime > $timeArrivalLate && $checkOutToTime < $timeLeaveEarly) {
+                $status = self::BOTH;
             }
         }
         return $status;
     }
+
+
 
     public static function getPersonalCheckInOutNow()
     {
@@ -146,10 +160,12 @@ class Attendance extends Model
         if (isset($data) && $data != 'null') {
             return $data;
         }
-        $data['first_checkin'] = null;
-        $data['last_checkout'] = null;
+        $data['first_checkin'] = 'null';
+        $data['last_checkout'] = 'null';
         return $data;
     }
+
+
 
     public static function compareAndGetMinuteStrTime($time1, $time2)
     {
@@ -161,6 +177,13 @@ class Attendance extends Model
             }
         }
         return 0;
+    }
+
+    public static function deleteAttendanceDataByEmployeeID($employee_id)
+    {
+        $data = self::where('employee_id', $employee_id);
+        if (isset($data))
+            $data->delete();
     }
 }
 

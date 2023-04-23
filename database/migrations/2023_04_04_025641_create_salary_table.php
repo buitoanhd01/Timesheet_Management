@@ -16,8 +16,7 @@ return new class extends Migration
             $table->integer('employee_id');
             $table->date('month')->nullable();
             $table->year('year')->nullable();
-            $table->float('overtime')->nullable();
-            $table->string('leave_days')->nullable();
+            $table->string('paid_leaves')->nullable();
             $table->double('total_salary')->nullable();
             $table->double('bonus')->nullable();
             $table->double('basic_salary')->nullable();

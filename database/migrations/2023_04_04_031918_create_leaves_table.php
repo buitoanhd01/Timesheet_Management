@@ -17,6 +17,8 @@ return new class extends Migration
             $table->dateTime('leave_date_start')->nullable();
             $table->dateTime('leave_date_end')->nullable();
             $table->boolean('leave_type', 1)->nullable();
+            $table->dateTime('time_sent_request')->nullable();
+            $table->dateTime('time_response_request')->nullable();
             $table->text('leave_reason')->nullable();
             $table->boolean('status', 1)->default(0);
             $table->timestamps();

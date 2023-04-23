@@ -17,9 +17,31 @@ class CalendarController extends Controller
         $param = $request->all();
         $currentTab = (isset($param['current_tab'])) ? $param['current_tab'] : 'daily';
         $dateFilter = (isset($param['dateFilter'])) ? $param['dateFilter'] : date('d-m-Y');
-        $listCalendars = Employee::getListCalendars($dateFilter, $currentTab);
-        // dd($listCalendars);
-        return response()->json(['list_calendar' => $listCalendars] ,200);
+        $searchValue = (isset($param['searchValue'])) ? $param['searchValue'] : '';
+        $searchValue = trim($searchValue);
+        $dataFilter = (isset($param['dataFilter'])) ? $param['dataFilter'] : '';
+        $listCalendars = Employee::getListCalendars($dateFilter, $currentTab, $searchValue, $dataFilter);
+        $count = [];
+        $count['ArrivalLate'] = 0;
+        $count['LeaveEarly'] = 0;
+        $count['Both'] = 0;
+        foreach ($listCalendars as $calendar)
+        {
+            switch ($calendar['status']) {
+                case 1:
+                    $count['ArrivalLate']++;
+                    break;
+                case 2:
+                    $count['LeaveEarly']++;
+                    break;
+                case 3:
+                    $count['Both']++;
+                    break;
+            }
+        }
+        if ($listCalendars)
+            return response()->json(['list_calendar' => $listCalendars, 'count' => $count] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
 
     public function insertAttendance(Request $request)
@@ -58,5 +80,36 @@ class CalendarController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getAttendanceByEmployeeID(Request $request)
+    {
+        $param = $request->all();
+        $employeeID = Employee::getCurrentEmployeeID();
+        $currentTab = (isset($param['current_tab'])) ? $param['current_tab'] : 'daily';
+        $dateFilter = (isset($param['dateFilter'])) ? $param['dateFilter'] : date('d-m-Y');
+        $dataFilter = (isset($param['dataFilter'])) ? $param['dataFilter'] : '';
+        $listCalendars = Employee::getListCalendarsByEmployeeID($dateFilter, $currentTab, $employeeID, $dataFilter);
+        $count = [];
+        $count['ArrivalLate'] = 0;
+        $count['LeaveEarly'] = 0;
+        $count['Both'] = 0;
+        foreach ($listCalendars as $calendar)
+        {
+            switch ($calendar['status']) {
+                case 1:
+                    $count['ArrivalLate']++;
+                    break;
+                case 2:
+                    $count['LeaveEarly']++;
+                    break;
+                case 3:
+                    $count['Both']++;
+                    break;
+            }
+        }
+        if ($listCalendars)
+            return response()->json(['list_calendar' => $listCalendars, 'count' => $count] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
 }

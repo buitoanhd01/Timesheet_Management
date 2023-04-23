@@ -1,4 +1,4 @@
-@extends('admin.layouts.custom')
+@extends('layouts.custom')
 
 @section('title', 'Timesheet Management')
 
@@ -30,15 +30,38 @@
         </div>
       </ul>
       <div class="card">
+        <div class="d-flex justify-content-between">
+          <div class="card-header pt-2 pb-2">
+            <label for="name_search">Search:</label>
+            <input type="text" id="search_text" class="text-center border border-3 rounded-2">
+          </div>
+          <div class="btn-filter mt-1 mb-1">
+            <button type="button" class="btn btn-outline-warning rounded-pill btn-filter-click" data-status="1">
+              Arrival Late:
+              <span class="badge rounded-pill" id="arrival_late">0</span>
+            </button>
+            <button type="button" class="btn btn-outline-warning rounded-pill btn-filter-click" data-status="2">
+              Leave Early:
+              <span class="badge rounded-pill" id="leave_early">0</span>
+            </button>
+            <button type="button" class="btn btn-outline-danger rounded-pill btn-filter-click" data-status="3">
+              Arrival Late/Leave Early:
+              <span class="badge rounded-pill" id="both">0</span>
+            </button>
+            <button class="btn btn-secondary btn-clear-filter ms-2 me-1">All</button>
+          </div>
+        </div>
         <!-- timesheet day -->
         <div class="card">
           <div class="table-responsive text-nowrap" id="vertical-example" style="max-height: 460px">
             <table id="calendar-report" class="table">
               <thead class="sticky-top" style="background-color: #dee5ff">
                 <tr>
-                  <th>Employee</th>
-                  <th>First Check-in</th>
-                  <th>Last Check-out</th>
+                  {{-- <th>Date</th> --}}
+                  <th>Staff Code</th>
+                  <th>Employee Name</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
                   <th>Working Hours</th>
                   <th>Overtime</th>
                   <th class="text-center">Status</th>

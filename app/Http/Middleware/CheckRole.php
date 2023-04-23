@@ -5,10 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class CheckRole
 {
@@ -17,11 +15,11 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, ...$permission): Response
     {
-        $user = Auth::user();
-        foreach ($roles as $role) {
-            if ($user->hasRole($role)) {
+        foreach ($permission as $p) {
+            if (auth()->user()->hasPermissionTo($p))
+            {
                 return $next($request);
             }
         }

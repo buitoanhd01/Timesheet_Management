@@ -24,8 +24,8 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico')}}" />
 
-    {{-- <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Fonts -->
+    {{-- <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
@@ -48,10 +48,6 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
-    <!-- Helpers -->
-    <script src="{{ asset('assets/vendor/js/helpers.js')}}"></script>
-
-    <script src="{{ asset('assets/js/config.js') }}"></script>
   </head>
 
   <body>
@@ -85,7 +81,6 @@
 
             @yield('content')
             @include('include.modal')
-            
             <!-- / Content -->
 
             <!-- Footer -->
@@ -112,21 +107,69 @@
     <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-
+    <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <!-- Helpers -->
+    <script src="{{ asset('assets/vendor/js/helpers.js')}}"></script>
+
+    <script src="{{ asset('assets/js/config.js') }}"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+    <link rel="stylesheet" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
+    <script src="{{ asset('js/jquery-ui/external/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    <script>
+      function removeTrailingSlash(str) {
+        if (str.endsWith('/')) {
+          return str.slice(0, -1);
+        }
+        return str;
+      }
+      const menuItems = document.querySelectorAll('.menu-item');
+
+      menuItems.forEach((item) => {
+        
+        item.addEventListener('click', () => {
+          
+          menuItems.forEach((item) => {
+            item.classList.remove('active');
+          });
+      
+            
+          item.classList.add('active');
+      
+        });
+      });
+      
+      // Kiểm tra nếu đã có trạng thái active được lưu trữ trong Local Storage
+      const activeMenuItem = window.location.href;
+      if (activeMenuItem) {
+        if (activeMenuItem.endsWith('/')) {
+          activeMenuItemNew = activeMenuItem.slice(0, -1);
+        } else {
+          activeMenuItemNew = activeMenuItem;
+        }
+        // Thêm class active vào menu item có id được lưu trữ trong Local Storage
+        let children = document.querySelector('a[href="' + activeMenuItemNew +'"]');
+        children.parentElement.classList.add('active');
+      } else {
+        menuItems[0].classList.add('active');
+      }
+    </script>
+
+    @yield('scripts')
+
+    {{-- <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
   </body>
 </html>

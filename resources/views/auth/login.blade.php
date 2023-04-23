@@ -39,8 +39,8 @@
 					</span>
 					
 					
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" id="email" value="{{ old('email') }}" required autofocus>
+					<div class="wrap-input100" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="username" id="username" value="{{ old('username') }}" required autofocus>
 						<span class="focus-input100"></span>
 						<span class="label-input100">Email</span>
 					</div>
@@ -54,7 +54,7 @@
 
 					<div class="flex-sb-m w-full p-t-3 p-b-32">
 						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+							<input class="input-checkbox100" id="ckb1" type="checkbox" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
 							<label class="label-checkbox100" for="ckb1">
 								Remember me
 							</label>

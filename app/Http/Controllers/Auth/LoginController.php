@@ -44,19 +44,15 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $role_id = Auth::user()->role_id;
-
-        $role = DB::table('roles')
-                ->where('id', $role_id)
-                ->value('name');
-
-        if($role =='admin' ){
+        if (auth()->user()->hasRole('super-admin')) {
             return redirect()->route('admin-dashboard');
         }
-        //Nếu tài khoản có role_name là user
-        else if($role =='employee'){
+        if (auth()->user()->hasPermissionTo('manage-general')) {
+            return redirect()->route('admin-dashboard');
+        } else if (auth()->user()->hasPermissionTo('using')) {
             return redirect()->route('employee-dashboard');
         }
+        // Auth::logout();
         abort(403, 'Unauthorized action.');
     }
 }

@@ -28,8 +28,8 @@ return new class extends Migration
             $table->string('tax_code')->nullable();
             $table->string('employee_type')->nullable();
             $table->integer('position_id')->nullable();
-            $table->integer('salary_id')->nullable();
             $table->integer('department_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

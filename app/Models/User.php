@@ -18,10 +18,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'role_id',
+        'status',
     ];
 
     /**
@@ -43,38 +45,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+    // public function employees()
+    // {
+    //     return $this->belongsTo(Employee::class);
+    // }
+
+
+    public static function getAllUsersActive()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        return self::with('roles')->leftJoin('employees', 'users.id', 'employees.user_id')
+        ->where('users.status', '!=', 'deleted')
+        ->select('full_name', 'users.*')
+        ->get();
     }
 
-    public function authorizeRoles($roles)
+    public static function deleteRoleId($role_id)
     {
-        abort_unless($this->hasAnyRole($roles), 401);
-        return true;
-    }
-
-    public function hasAnyRole($roles)
-    {
-        if (is_array($roles)) {
-            foreach ($roles as $role) {
-                if ($this->hasRole($role)) {
-                    return true;
-                }
-            }
-        } else {
-            if ($this->hasRole($roles)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function hasRole($role)
-    {
-        if ($this->roles()->where('name', $role)->first()) {
-            return true;
-        }
-        return false;
+        return self::join('roles', 'users.role_id', 'roles.id')
+            ->where('role_id', $role_id)->update(['role_id' => '']);
     }
 }

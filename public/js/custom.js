@@ -4,6 +4,9 @@ function showTime() {
     let hour = time.getHours();
     let min = time.getMinutes();
     let sec = time.getSeconds();
+    let date = time.getDate();
+    let month = time.getMonth();
+    let year = time.getFullYear();
     am_pm = " AM";
   
     if (hour > 12) {
@@ -40,7 +43,7 @@ function changeStatusCheckButtons() {
     },
     success: function(data) {
       $('.loading-effect').hide();
-      if (!data.response.first_checkin) {
+      if (data.response.first_checkin == 'null') {
         $('#btn_checked_in').hide();
         $('#btn_check_in').removeClass('visually-hidden');
       } else {

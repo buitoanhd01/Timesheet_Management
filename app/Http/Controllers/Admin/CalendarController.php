@@ -12,4 +12,9 @@ class CalendarController extends Controller
     {
         return view('admin.calendar.calendar-manager');
     }
+
+    public function getSelfAttendance()
+    {
+        return view('employee.attendance.my-attendance');
+    }
 }

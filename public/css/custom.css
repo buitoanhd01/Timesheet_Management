@@ -42,3 +42,7 @@ to {
 .loading-effect.active {
 display: flex;
 }
+
+.btn-edit-custom {
+    padding: 4px 17px;
+}
