@@ -1,12 +1,13 @@
 (function ($) {
   loadProfile();
     function loadProfile() {
+      let dataFilter = $('#search_text').val();
         $.ajax({
             url: '/api/get_employee_list', // đường dẫn tới tệp JSON trên máy chủ
             method: 'GET',
             dataType: 'json', // định dạng dữ liệu là JSON
             data: {
-              
+              dataFilter: dataFilter
             },
             beforeSend: function(){
               $('.loading-effect').show();
@@ -57,28 +58,51 @@
 
     $(document).on('click', '.btn-delete-employee', function (e) {
       let id = $(this).data('id');
-      $.ajax({
-        url: '/api/delete_employee', // đường dẫn tới tệp JSON trên máy chủ
-        method: 'POST',
-        dataType: 'json', // định dạng dữ liệu là JSON
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-          id: id,
-        },
-        beforeSend: function(){
-          $('.loading-effect').show();
-        },
-        success: function(data) {
-          $('.loading-effect').hide();
-          loadProfile();
-        },
-        error: function() {
-          // Xử lý lỗi khi tải dữ liệu thất bại
-          alert('Lỗi khi tải dữ liệu');
-          $('.loading-effect').hide();
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '/api/delete_employee', // đường dẫn tới tệp JSON trên máy chủ
+            method: 'POST',
+            dataType: 'json', // định dạng dữ liệu là JSON
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+              id: id,
+            },
+            beforeSend: function(){
+              $('.loading-effect').show();
+            },
+            success: function(data) {
+              $('.loading-effect').hide();
+              loadProfile();
+              Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: 'Successfully!',
+                showConfirmButton: false,
+                timer: 1000
+              })
+            },
+            error: function() {
+              // Xử lý lỗi khi tải dữ liệu thất bại
+              alert('Lỗi khi tải dữ liệu');
+              $('.loading-effect').hide();
+            }
+          });
         }
-      });
+      })
+    });
+
+    $('#search_text').on('keyup', function (e) {
+      loadProfile();
     });
 })(jQuery);

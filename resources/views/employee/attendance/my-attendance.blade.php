@@ -1,12 +1,12 @@
 @extends('layouts.custom')
 
-@section('title', 'Timesheet Management')
+@section('title', 'Timesheet')
 
 
 @section('content')
 <input type="hidden" id="get_self_calendar" value="{{ route('get_self_calendar') }}">
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Timesheet Management /</span><span class="tab-text"> Daily</span></h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Timesheet /</span><span class="tab-text"> Daily</span></h4>
 
   <div class="row">
     <div class="col-md-12">

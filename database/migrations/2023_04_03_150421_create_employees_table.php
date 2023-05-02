@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('position_id')->nullable();
             $table->integer('department_id')->nullable();
             $table->string('status')->nullable();
+            $table->integer('paid_leave_date')->default(0);
             $table->timestamps();
         });
     }

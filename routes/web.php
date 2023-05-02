@@ -21,18 +21,23 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth', 'status']], function () {
     Route::group(['middleware' => ['permission:using']], function () {
-        Route::get('/request', [App\Http\Controllers\Employee\DashboardController::class, 'index'])->name('employee-request');
-
-        Route::get('/calendar', [App\Http\Controllers\Admin\CalendarController::class, 'getSelfAttendance'])->name('my-attendance');
-        
-    });
-    Route::group(['middleware' => ['role:employee']], function () {
-        //
-        Route::get('/employee', [App\Http\Controllers\Employee\DashboardController::class, 'index'])->name('employee-dashboard');
-    });
-    Route::group(['middleware' => ['permission:manage-general']], function () {
         //Dashboard
         Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin-dashboard');
+
+        Route::get('/self/calendar', [App\Http\Controllers\Admin\CalendarController::class, 'getSelfAttendance'])->name('my-attendance');
+
+        Route::get('/request', [App\Http\Controllers\Employee\RequestController::class, 'index'])->name('employee-request');
+
+        Route::get('/my-profile', [App\Http\Controllers\Admin\EmployeeController::class, 'showMyEditEmployeeForm'])->name('my-profile-show');
+
+        Route::get('/my-account', [App\Http\Controllers\Admin\UserController::class, 'showMyEditUserForm'])->name('my-account');
+        
+    });
+    // Route::group(['middleware' => ['role:employee']], function () {
+    //     //
+    //     Route::get('/employee', [App\Http\Controllers\Employee\DashboardController::class, 'index'])->name('employee-dashboard');
+    // });
+    Route::group(['middleware' => ['permission:manage-general']], function () {
 
         //Timesheet
         Route::get('/admin/calendar', [App\Http\Controllers\Admin\CalendarController::class, 'index'])->name('admin-calendar');
@@ -64,6 +69,12 @@ Route::group(['middleware' => ['auth', 'status']], function () {
         Route::get('/admin/position', [App\Http\Controllers\Admin\PositionController::class, 'index'])->name('admin-position-management');
         Route::get('/admin/position/create', [App\Http\Controllers\Admin\PositionController::class, 'showCreatePositionForm'])->name('admin-position-show-create');
         Route::post('/admin/position/create', [App\Http\Controllers\Admin\PositionController::class, 'addNewPosition'])->name('admin-position-create');
+
+        //Report
+        Route::get('/admin/report', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('admin-report');
+        Route::get('/admin/report/view', [App\Http\Controllers\Admin\ReportController::class, 'getReportAttendance'])->name('admin-report-table');
+        Route::get('/admin/report/overtime', [App\Http\Controllers\Admin\ReportController::class, 'getReportOvertime'])->name('admin-report-overtime');
+        Route::get('/admin/report/total', [App\Http\Controllers\Admin\ReportController::class, 'getReportTotal'])->name('admin-report-total');
     });
     
     // Route::group(['middleware' => ['role:manage-users']], function () {

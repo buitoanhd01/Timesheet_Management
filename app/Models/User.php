@@ -51,17 +51,16 @@ class User extends Authenticatable
     // }
 
 
-    public static function getAllUsersActive()
+    public static function getAllUsersActive($filter)
     {
-        return self::with('roles')->leftJoin('employees', 'users.id', 'employees.user_id')
+        $data = self::with('roles')->leftJoin('employees', 'users.id', 'employees.user_id')
         ->where('users.status', '!=', 'deleted')
-        ->select('full_name', 'users.*')
-        ->get();
-    }
-
-    public static function deleteRoleId($role_id)
-    {
-        return self::join('roles', 'users.role_id', 'roles.id')
-            ->where('role_id', $role_id)->update(['role_id' => '']);
+        ->select('full_name', 'users.*');
+        if (isset($filter)) {
+            $data=$data->where('full_name', 'like' , '%'.$filter.'%')
+            ->orWhere('username', 'like', '%'.$filter.'%');
+        }
+        $data=$data->get();
+        return $data;
     }
 }

@@ -91,3 +91,144 @@
   </div>
 </div>
 </div>
+
+<div class="modal fade" id="modalRequestexample" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="backDropModalTitle">Leave Request</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mb-3">
+            <label for="nameBackdrop" class="form-label">Name</label>
+            <input
+              type="text"
+              id="nameBackdrop"
+              class="form-control"
+              placeholder="Enter Name"
+            />
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col mb-0">
+            <label for="emailBackdrop" class="form-label">Email</label>
+            <input
+              type="text"
+              id="emailBackdrop"
+              class="form-control"
+              placeholder="xxxx@xxx.xx"
+            />
+          </div>
+          <div class="col mb-0">
+            <label for="dobBackdrop" class="form-label">DOB</label>
+            <input
+              type="text"
+              id="dobBackdrop"
+              class="form-control"
+              placeholder="DD / MM / YY"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="form-group mb-2">
+            <label for="currentPassword">Current Password</label>
+            <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+          </div>
+          <div class="form-group mb-2">
+            <label for="newPassword">New Password</label>
+            <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+          </div>
+          <div class="form-group mb-2">
+            <label for="confirmPassword">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leaveRequestModalLabel">Leave Request</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group mb-3">
+            <label for="leave_type" class="form-label">Leave Type:</label>
+            <select class="form-control" id="leave_type">
+              <option value="1">Paid Leave</option>
+              <option value="2">No Paid Leave</option>
+              <option value="3">Sick Leave</option>
+              <option value="4">Maternity Leave</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="start_date" class="form-label">Start Time:</label>
+            <input type="text" class="form-control datepicker" id="start_date" placeholder="Start Time">
+          </div>
+          <div class="form-group mb-3">
+            <label for="end_date" class="form-label">End Time:</label>
+            <input type="text" class="form-control datepicker" id="end_date" placeholder="End Time">
+          </div>
+          <div class="form-group mb-3">
+            <label for="reason" class="form-label">Reason:</label>
+            <textarea class="form-control" id="reason" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="submit-leave-request">Send Request</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,15 +18,30 @@ class Leave extends Model
     protected $table = 'leaves';
 
     protected $fillable = [
+        'employee_id',
         'leave_date_start',
         'leave_date_end',
         'leave_type',
-        'leave_reason',
+        'reason',
         'status',
+        'time_sent_request',
+        'time_response_request',
+        'responded_by'
     ];
 
-    public function employees(): BelongsTo
+    // public function employees(): BelongsTo
+    // {
+    //     return $this->belongsTo(Employees::class);
+    // }
+    public static function getLeavesByEmployeeId($id, $dataFilter)
     {
-        return $this->belongsTo(Employees::class);
+        if ($dataFilter != 'all') {
+            $data = self::leftJoin('employees', 'employees.id', 'leaves.employee_id')
+                ->where(['employee_id' => $id, 'leaves.status' => $dataFilter]);
+        } else {
+            $data = self::leftJoin('employees', 'employees.id', 'leaves.employee_id')
+                ->where('employee_id', $id);
+        }
+        return $data;
     }
 }

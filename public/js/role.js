@@ -67,6 +67,13 @@
               // Xử lý dữ liệu khi tải về thành công
               loadRole();
               $('.loading-effect').hide();
+              Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: 'Successfully!',
+                showConfirmButton: false,
+                timer: 1000
+              })
               $('#role_name').empty().val('');
             },
             error: function() {
@@ -78,8 +85,18 @@
     });
 
     $(document).on('click', '#btn_delete_role', function(e) {
-        let role_id = $(this).data('id');
-        $.ajax({
+      let role_id = $(this).data('id');
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
             url: '/api/delete_role', // đường dẫn tới tệp JSON trên máy chủ
             method: 'GET',
             dataType: 'json', // định dạng dữ liệu là JSON
@@ -96,6 +113,13 @@
               // Xử lý dữ liệu khi tải về thành công
               loadRole();
               $('.loading-effect').hide();
+              Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: 'Successfully!',
+                showConfirmButton: false,
+                timer: 1000
+              })
             },
             error: function() {
               // Xử lý lỗi khi tải dữ liệu thất bại
@@ -103,5 +127,8 @@
               $('.loading-effect').hide();
             }
         });
+        }
+      })
+        
     });
 })(jQuery);

@@ -136,4 +136,20 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin-employee')->with('success', 'Sửa nhân viên thành công!');
     }
+
+    public function showMyEditEmployeeForm(Request $request)
+    {
+        $id = Employee::getCurrentEmployeeID();
+        $employee = Employee::getEmployeeByID($id);
+        $user = User::find($employee->user_id);
+        $position = Position::all();
+        $department = Department::all();
+        return view('admin.employee-management.employee-profile', 
+        [
+            'employee'      =>   $employee,
+            'positions'     =>   $position,
+            'departments'   =>   $department,
+            'user'          =>   $user,
+        ]);
+    }
 }

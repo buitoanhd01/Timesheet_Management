@@ -57,7 +57,7 @@
             <table id="calendar-report" class="table">
               <thead class="sticky-top" style="background-color: #dee5ff">
                 <tr>
-                  {{-- <th>Date</th> --}}
+                  <th>Date</th>
                   <th>Staff Code</th>
                   <th>Employee Name</th>
                   <th>Check-in</th>
@@ -84,9 +84,8 @@
 @section('scripts')
     <script type="text/javascript">
       $('#calendar_datepicker').datepicker({
-        dateFormat: "yy/mm/dd",
-        changeMonth: true,
-        changeYear: true,
+        format: "yyyy/mm/dd",
+        autoclose: true,
       });
     </script>
     <script src="{{ asset('js/custom_timesheet.js') }}"></script>

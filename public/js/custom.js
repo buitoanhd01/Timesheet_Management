@@ -82,6 +82,13 @@ changeStatusCheckButtons();
               } else if (data.status_code == 222) {
                 alert('You had checked in!');
               }else if (data.response.first_checkin) {
+                Swal.fire({
+                  position: 'middle',
+                  icon: 'success',
+                  title: 'Successfully!',
+                  showConfirmButton: false,
+                  timer: 1000
+                })
                 $('#btn_check_out').removeAttr('disabled');
                 $('#btn_check_in').addClass('visually-hidden');
                 $('#btn_checked_in').show();
@@ -93,5 +100,49 @@ changeStatusCheckButtons();
               alert('Lỗi khi tải dữ liệu');
             }
           });
+    });
+
+    $(document).on('click', '#show_change_password', function(e) {
+      $('#changePasswordModal').modal('show');
+    });
+
+    $('#changePasswordModal form').submit(function(e) {
+      e.preventDefault(); // ngăn chặn form được submit
+
+      // lấy giá trị của các trường input
+      var currentPassword = $('#currentPassword').val();
+      var newPassword = $('#newPassword').val();
+      var confirmPassword = $('#confirmPassword').val();
+  
+      // kiểm tra xem new password và confirm password có khớp không
+      if (newPassword !== confirmPassword) {
+        alert("New password and confirm password don't match");
+        return false;
+      }
+      $.ajax({
+        type: "POST",
+        url: "/api/change-password",
+        dataType: 'json', // định dạng dữ liệu là JSON
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword
+        },
+        success: function(response) {
+          // Xử lý phản hồi từ server sau khi thay đổi mật khẩu thành công
+          if (response.success) {
+            alert("Password changed successfully!");
+            $('#changePasswordModal').modal('hide');
+          } else {
+            alert(response.error);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert("Error: " + errorThrown);
+        }
+      });
     });
 })(jQuery);

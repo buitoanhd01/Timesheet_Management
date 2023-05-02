@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 class EmployeeController extends Controller
 {
     //
-    public function getListEmployees()
+    public function getListEmployees(Request $request)
     {
-        $listEmployee = Employee::getListEmployees();
+        $param = $request->all();
+        $dataFilter = isset($param['dataFilter']) ? $param['dataFilter'] : null;
+        $listEmployee = Employee::getListEmployees($dataFilter);
         if ($listEmployee)
             return response()->json(['list_employee' => $listEmployee] ,200);
         return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);

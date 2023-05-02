@@ -87,7 +87,7 @@ class CalendarController extends Controller
         $param = $request->all();
         $employeeID = Employee::getCurrentEmployeeID();
         $currentTab = (isset($param['current_tab'])) ? $param['current_tab'] : 'daily';
-        $dateFilter = (isset($param['dateFilter'])) ? $param['dateFilter'] : date('d-m-Y');
+        $dateFilter = (isset($param['dateFilter'])) ? $param['dateFilter'] : date('Y-m-d');
         $dataFilter = (isset($param['dataFilter'])) ? $param['dataFilter'] : '';
         $listCalendars = Employee::getListCalendarsByEmployeeID($dateFilter, $currentTab, $employeeID, $dataFilter);
         $count = [];
@@ -111,5 +111,14 @@ class CalendarController extends Controller
         if ($listCalendars)
             return response()->json(['list_calendar' => $listCalendars, 'count' => $count] ,200);
         return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function getDashboardCalendar()
+    {
+        $employee_id = Employee::getCurrentEmployeeID();
+        $attendance = Attendance::where(['employee_id' => $employee_id, 'date' => date('Y-m-d')])->first();
+        if ($attendance)
+            return response()->json(['attendance' => $attendance] ,200);
+        return response()->json(['status_code' => 401, 'message' => 'No DATA'] ,200);
     }
 }

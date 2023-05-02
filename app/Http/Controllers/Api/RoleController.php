@@ -39,10 +39,12 @@ class RoleController extends Controller
     public function deleteRole(Request $request)
     {
         $param = $request->all();
-        $deleteRoleId = User::deleteRoleId($param['role_id']);
         $role = Role::find($param['role_id']);
+        if ($role->name == 'super-admin') {
+            return response()->json(['status_code' => 400, 'message' => 'CANT DELETE SUPERADMIN'] ,400);
+        }
+        $role->syncPermissions([]);
         $role->delete();
         return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
-        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
 }

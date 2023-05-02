@@ -76,7 +76,7 @@
               }
               let note = (item.notes) ? '<td class="text-center"><button data-note="' + item.notes +'" class="btn btn-primary">Note</button></td>' : '<td></td>';
               html += '<tr>'
-            // + '<td class="">' + item.date + '</td>'
+            + '<td class="">' + item.date + '</td>'
             + '<td class="">' + item.employee_code + '</td>'
             + '<td><a href="#">'+ item.full_name +'</strong></td>'
             + '<td>' + item.first_checkin + '</td>'

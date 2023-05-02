@@ -62,6 +62,25 @@ class DatabaseSeeder extends Seeder
             'user_id'       =>  1, 
         ]);
         $employee->save();
+        $employee2 = new Employee([
+            'first_name'    =>  'Phan',
+            'last_name'     =>  'Truong',
+            'full_name'     =>  'Phan Truong',
+            'email'         =>  'truong@mail.com',
+            'employee_code' =>  'NV002',
+            'tax_code'      =>  '151217111',
+            'phone'         =>  '03833882222',
+            'address'       =>  'HD',
+            'birthday'      =>  '2001-12-15',
+            'gender'        =>  'male',
+            'start_time'    =>  '2001-12-15',
+            'employee_type' =>  'official',
+            'position_id'   =>  2,
+            'department_id' =>  1,
+            'status'        => 'working',
+            'user_id'       =>  2, 
+        ]);
+        $employee2->save();
         Permission::create(['name' => 'manage-request']);
         Permission::create(['name' => 'manage-general']);
         Permission::create(['name' => 'manage-calendar']);
@@ -75,7 +94,7 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'employee']);
         $user->assignRole('super-admin');
         $user2->assignRole('employee');
-        // $user->givePermissionTo(Permission::all());
+        $user->givePermissionTo(Permission::all());
         $user2->givePermissionTo('using');
     }
 }

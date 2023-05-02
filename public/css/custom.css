@@ -11,8 +11,8 @@
     cursor: pointer;
 }
 
-.ui-datepicker {
-    z-index: 1030!important;
+.datepicker {
+    z-index: 2030!important;
 }
 
 .loading-effect {
@@ -46,3 +46,19 @@ display: flex;
 .btn-edit-custom {
     padding: 4px 17px;
 }
+
+.request-tab {
+    cursor: pointer;
+}
+
+#attendance_report .data-date {
+    min-width: 70px;
+}
+
+.report-tab {
+    cursor: pointer;
+}
+
+#attendance_report .weekend {
+    background-color: #ffcccc; /* màu xám nhạt */
+  }

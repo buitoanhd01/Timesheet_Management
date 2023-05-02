@@ -52,3 +52,15 @@ Route::get('/get_department_list', [App\Http\Controllers\Api\DepartmentControlle
 
 Route::post('/delete_employee', [App\Http\Controllers\Api\EmployeeController::class, 'deleteEmployee'])
 ->name('delete_employee');
+
+Route::get('/get_self_request', [App\Http\Controllers\Api\RequestController::class, 'getSelfRequest'])
+->name('get_self_request');
+
+Route::get('/get_dashboard_calendar', [App\Http\Controllers\Api\CalendarController::class, 'getDashboardCalendar'])
+->name('get_dashboard_calendar');
+
+Route::post('/change-password', [App\Http\Controllers\Api\UserController::class, 'changePassword'])
+->name('change-password');
+
+Route::get('/get_report_attendances', [App\Http\Controllers\Api\ReportController::class, 'getReportAttendance'])
+->name('get_report_attendances');

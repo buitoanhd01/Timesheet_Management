@@ -41,18 +41,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    protected function authenticated(Request $request, $user)
-    {
-        if (auth()->user()->hasRole('super-admin')) {
-            return redirect()->route('admin-dashboard');
-        }
-        if (auth()->user()->hasPermissionTo('manage-general')) {
-            return redirect()->route('admin-dashboard');
-        } else if (auth()->user()->hasPermissionTo('using')) {
-            return redirect()->route('employee-dashboard');
-        }
-        // Auth::logout();
-        abort(403, 'Unauthorized action.');
-    }
 }

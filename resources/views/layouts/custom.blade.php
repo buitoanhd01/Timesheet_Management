@@ -124,10 +124,11 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
     
-    <link rel="stylesheet" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
-    <script src="{{ asset('js/jquery-ui/external/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ asset('assets/datepicker/css/bootstrap-datepicker3.standalone.css') }}">
+    <script src="{{ asset('assets/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script>
       function removeTrailingSlash(str) {
         if (str.endsWith('/')) {
@@ -165,6 +166,18 @@
       } else {
         menuItems[0].classList.add('active');
       }
+
+      const Toast = Swal.mixin({
+      toast: true,
+      position: 'middle-end',
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
     </script>
 
     @yield('scripts')

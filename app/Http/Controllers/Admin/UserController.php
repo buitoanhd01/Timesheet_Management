@@ -81,4 +81,19 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('admin-user-management')->with('success', 'Sửa tài khoản thành công!');
     }
+
+    public function showMyEditUserForm(Request $request)
+    {
+        $id = auth()->user()->id;
+        $data = [];
+        $data['role'] = Role::all();
+        $user = User::with('roles')->find($id);
+        $role = $user->roles[0];
+        return view('admin.user-management.my-account', 
+        [
+            'roles'             => $data['role'],
+            'user'              => $user,
+            'role_name'         => $role->name
+        ]);
+    }
 }
