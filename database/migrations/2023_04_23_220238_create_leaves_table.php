@@ -21,7 +21,7 @@ return new class extends Migration
             $table->dateTime('time_sent_request')->nullable();
             $table->dateTime('time_response_request')->nullable();
             $table->boolean('status', 1)->default(0);
-            $table->integer('responded_by')->nullable();
+            $table->string('responded_by')->nullable();
             $table->timestamps();
         });
     }

@@ -18,9 +18,9 @@
                   html +='<tr>'
                 +  '<td>' + item.name + '</td>'
                 +  '<td class=" d-flex justify-content-center">'
-                +    '<button type="button" class="me-1 btn btn-primary btn-sm btn-edit-custom">Edit</button>'
+                // +    '<button type="button" class="me-1 btn btn-primary btn-sm btn-edit-custom">Edit</button>'
                 +    '<button type="button" id="btn_delete_role" class="btn btn-danger btn-sm me-1" data-id="' + item.id +'">Delete</button>'
-                +    '<button type="button" class="btn btn-warning btn-sm">Permission</button>'
+                // +    '<button type="button" class="btn btn-warning btn-sm">Permission</button>'
                 +  '</td>'
                 +'</tr>'
                 });
@@ -123,7 +123,13 @@
             },
             error: function() {
               // Xử lý lỗi khi tải dữ liệu thất bại
-              alert('Lỗi khi tải dữ liệu');
+              Swal.fire({
+                position: 'middle',
+                icon: 'error',
+                title: 'Error!',
+                showConfirmButton: false,
+                timer: 1000
+              })
               $('.loading-effect').hide();
             }
         });

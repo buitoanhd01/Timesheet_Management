@@ -13,9 +13,46 @@ class RequestController extends Controller
     {
         $param = $request->all();
         $dataFilter = isset($param['dataFilter']) ? $param['dataFilter'] : 'all';
+        $dateFilter = isset($param['dateFilter']) ? date('Y-m',strtotime($param['dateFilter'])) : date('Y-m');
         $id = Employee::getCurrentEmployeeID();
-        $listRequests = Leave::getLeavesByEmployeeId($id, $dataFilter);
+        $listRequests = Leave::getLeavesByEmployeeId($id, $dataFilter, $dateFilter);
             return response()->json(['status_code' => 200, 'message' => 'SUCCESS', 'list_requests' => $listRequests] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function getAllRequest(Request $request)
+    {
+        $param = $request->all();
+        $dataFilter = isset($param['dataFilter']) ? $param['dataFilter'] : 'all';
+        $dateFilter = isset($param['dateFilter']) ? date('Y-m',strtotime($param['dateFilter'])) : date('Y-m');
+        $listRequests = Leave::getAllLeaveRequests($dataFilter, $dateFilter);
+            return response()->json(['status_code' => 200, 'message' => 'SUCCESS', 'list_requests' => $listRequests] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function createNewRequest(Request $request)
+    {
+        $param = $request->all();
+        $employee_id = Employee::getCurrentEmployeeID();
+        $leave = Leave::create(['employee_id'       => $employee_id,
+                                'leave_date_start'  => $param['start_date'],
+                                'leave_date_end'    => $param['end_date'],
+                                'leave_type'        => $param['leave_type'],
+                                'reason'            => $param['reason'],
+                                'time_sent_request' => date('Y-m-d H:i:s')]);
+        if ($leave)
+            return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function updateStatusRequest(Request $request)
+    {
+        $param = $request->all();
+        $id = isset($param['id']) ? $param['id'] : '';
+        $status = isset($param['status']) ? $param['status'] : '0';
+        $statusRequest = Leave::updateStatusByID($id, $status);
+        if ($statusRequest)
+            return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
         return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
 }

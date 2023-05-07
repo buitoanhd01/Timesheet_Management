@@ -31,6 +31,12 @@ Route::group(['middleware' => ['auth', 'status']], function () {
         Route::get('/my-profile', [App\Http\Controllers\Admin\EmployeeController::class, 'showMyEditEmployeeForm'])->name('my-profile-show');
 
         Route::get('/my-account', [App\Http\Controllers\Admin\UserController::class, 'showMyEditUserForm'])->name('my-account');
+
+        //Report
+        Route::get('/report', [App\Http\Controllers\Admin\ReportController::class, 'reportSelf'])->name('employee-report');
+        Route::get('/report/view', [App\Http\Controllers\Admin\ReportController::class, 'getReportAttendanceByID'])->name('employee-report-table');
+        Route::get('/report/overtime', [App\Http\Controllers\Admin\ReportController::class, 'getReportOvertimeByID'])->name('employee-report-overtime');
+        Route::get('/report/total', [App\Http\Controllers\Admin\ReportController::class, 'getReportTotalByID'])->name('employee-report-total');
         
     });
     // Route::group(['middleware' => ['role:employee']], function () {
@@ -75,6 +81,9 @@ Route::group(['middleware' => ['auth', 'status']], function () {
         Route::get('/admin/report/view', [App\Http\Controllers\Admin\ReportController::class, 'getReportAttendance'])->name('admin-report-table');
         Route::get('/admin/report/overtime', [App\Http\Controllers\Admin\ReportController::class, 'getReportOvertime'])->name('admin-report-overtime');
         Route::get('/admin/report/total', [App\Http\Controllers\Admin\ReportController::class, 'getReportTotal'])->name('admin-report-total');
+
+        //
+        Route::get('/admin/request', [App\Http\Controllers\Admin\RequestController::class, 'index'])->name('admin-request');
     });
     
     // Route::group(['middleware' => ['role:manage-users']], function () {

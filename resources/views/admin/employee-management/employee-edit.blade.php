@@ -20,7 +20,7 @@
               id="uploadedAvatar"
             />
             <div class="button-wrapper">
-              <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+              {{-- <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                 <span class="d-none d-sm-block">Upload new photo</span>
                 <i class="bx bx-upload d-block d-sm-none"></i>
                 <input
@@ -36,7 +36,7 @@
                 <span class="d-none d-sm-block">Reset</span>
               </button>
 
-              <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+              <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> --}}
             </div>
           </div>
         </div>

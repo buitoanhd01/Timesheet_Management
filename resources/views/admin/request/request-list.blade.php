@@ -30,22 +30,24 @@
             ><i class="bx bx-link-alt me-1"></i> Confused</a
           >
         </li>
-        <button type="button" class="btn btn-primary position-absolute" id="btn_add_request" style="margin-right: 24px;right: 0;">Add New Request</button>
+        {{-- <button type="button" class="btn btn-primary position-absolute" id="btn_add_request" style="margin-right: 24px;right: 0;">Add New Request</button> --}}
         <div>
           <input type="text" class="custom-datepicker text-center" id="calendar_datepicker" value="{{ date('Y/m') }}" name="calendar-datepicker" autocomplete="off"/>
         </div>
       </ul>
       <div class="card">
-        {{-- <div class="card-header pt-2 pb-2">
+        <div class="card-header pt-2 pb-2">
             <label for="name_search">Search:</label>
             <input type="text" id="search_text" class="text-center border border-3 rounded-2">
-        </div> --}}
+        </div>
         <!-- timesheet day -->
         <div class="card">
           <div class="table-responsive text-nowrap" style="max-height: 460px">
             <table id="calendar-report-employee" class="table">
               <thead class="sticky-top" style="background-color: #dee5ff">
                 <tr>
+                  <th>Employee_code</th>
+                  <th>Full_name</th>
                   <th>Leave Start</th>
                   <th>Leave End</th>
                   <th>Leave Type</th>
@@ -57,7 +59,7 @@
                   <th class="text-center">Action</th>
                 </tr>
               </thead>
-              <tbody id="my_request">
+              <tbody id="request_manager">
                 
               </tbody>
             </table>
@@ -79,5 +81,5 @@
         autoclose: true
       });
     </script>
-    <script src="{{ asset('js/request.js') }}"></script>
+    <script src="{{ asset('js/request-manager.js') }}"></script>
 @endsection

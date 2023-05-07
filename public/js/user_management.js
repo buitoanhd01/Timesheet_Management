@@ -73,7 +73,7 @@
                 } else {
                     status = '<td><span class="badge bg-label-warning me-1">' + item.status + '</span></td>';
                 }
-                let fullName = (item.full_name) ? item.full_name : '<button class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#modal_assign_user">Assign Now</button>';
+                let fullName = (item.full_name) ? item.full_name : '<button class="btn btn-success btn-sm me-1">Host User</button>';
                 let role = (item.roles[0].name) ? item.roles[0].name : '';
                 html += '<tr>'
                 +  '<td>' + (idx + 1) + '</td>'
@@ -84,7 +84,7 @@
                 + '<td>'
                 +    '<a href="/admin/users/edit/' + item.id +'" class="btn btn-primary btn-sm btn-edit-custom">Edit</a>'
                 +    '<button type="button" class="btn btn-danger btn-sm ms-1 me-1 btn-delete-user" data-id="' + item.id +'">Delete</button>'
-                +    '<button type="button" class="btn btn-warning btn-sm ">Role Edit</button>'
+                // +    '<button type="button" class="btn btn-warning btn-sm ">Role Edit</button>'
                 + '</td>'
                 +'</tr>'
               });

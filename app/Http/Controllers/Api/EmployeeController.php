@@ -29,7 +29,7 @@ class EmployeeController extends Controller
             if ($employeeDelete->user_id == auth()->user()->id) {
                 return response()->json(['status_code' => 401, 'message' => 'CANT DELETE YOURSELF'] ,400);
             }
-            $attendance = Attendance::deleteAttendanceDataByEmployeeID($param['id']);
+            // $attendance = Attendance::deleteAttendanceDataByEmployeeID($param['id']);
             $userDeleted = User::find($employeeDelete->user_id);
             if (isset($userDeleted)) {
                 $userDeleted->syncRoles([]);

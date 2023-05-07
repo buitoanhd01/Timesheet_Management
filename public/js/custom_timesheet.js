@@ -75,10 +75,12 @@
                   status = '<td class="text-center"><span class="badge bg-label-infor me-1">Leaved</span></td>';
               }
               let note = (item.notes) ? '<td class="text-center"><button data-note="' + item.notes +'" class="btn btn-primary">Note</button></td>' : '<td></td>';
+              let employee_code = (item.employee_code) ? item.employee_code : '<span class="badge bg-label-danger me-1">Deleted</span>';
+              let full_name = (item.full_name) ? item.full_name : '<span class="badge bg-label-danger me-1">Deleted</span>'
               html += '<tr>'
             + '<td class="">' + item.date + '</td>'
-            + '<td class="">' + item.employee_code + '</td>'
-            + '<td><a href="#">'+ item.full_name +'</strong></td>'
+            + '<td class="">' + employee_code + '</td>'
+            + '<td><a href="#">'+ full_name +'</strong></td>'
             + '<td>' + item.first_checkin + '</td>'
             + '<td>' + item.last_checkout + '</td>'
             + '<td>' + item.working_hours + '</td>'

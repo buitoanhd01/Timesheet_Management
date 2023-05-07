@@ -31,10 +31,10 @@
       <div class="card">
         <div class="d-flex justify-content-between">
           <div class="card-header pt-2 pb-2">
-            <label for="name_search">Search:</label>
-            <input type="text" id="search_text" class="text-center border border-3 rounded-2">
+            {{-- <label for="name_search">Search:</label>
+            <input type="text" id="search_text" class="text-center border border-3 rounded-2"> --}}
           </div>
-          <p class="mb-0 mt-2 me-5">
+          <p class="mb-3 mt-2 me-5">
             <span class="badge badge-center rounded-pill bg-warning text-warning">5</span> : <span class="me-2">Wrong Time</span>
             <span class="badge badge-center rounded-pill" style="background-color: #ffcccc;color: #ffcccc">5</span> : <span>Weekend</span>
           </p>
@@ -63,5 +63,5 @@
         autoclose: true
       });
     </script>
-    <script src="{{ asset('js/report.js') }}"></script>
+    <script src="{{ asset('js/my_report.js') }}"></script>
 @endsection

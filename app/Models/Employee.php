@@ -123,8 +123,11 @@ class Employee extends Model
         ->leftJoin('positions', 'employees.position_id', 'positions.id')
         ->leftJoin('users', 'employees.user_id', 'users.id')
         ->select('employees.*', 'departments.department_name as department', 'positions.position_name as position' ,'users.username');
-        if (isset($dataFilter)) {
-            $data = $data->where('employees.full_name', 'like', '%'.$dataFilter.'%');
+        if (isset($dataFilter) && !empty($dataFilter)) {
+            $data = $data->where(function($query) use ($dataFilter) {
+                $query->where('full_name', 'like', '%'.$dataFilter.'%')
+                    ->orWhere('employee_code', 'like', '%'.$dataFilter.'%');
+            });
         }
         $data = $data->get();
         return $data;
@@ -208,11 +211,11 @@ class Employee extends Model
     {
         $data = [];
         $reportList = self::leftJoin('attendances', 'employees.id', 'attendances.employee_id')
-        ->leftJoin('leaves', 'employees.id', 'leaves.employee_id')
         ->select(
                 'employees.full_name',
                 'employees.employee_code',
                 'attendances.working_hours',
+                'attendances.status',
                 DB::raw('DATE(attendances.date) as date'),
                 DB::raw('SUM(working_hours) over (partition by employee_code, date_format(date, "%Y-%m")) as hour'),
         )->where('date', 'like', $dateFilter.'%')
@@ -234,8 +237,9 @@ class Employee extends Model
         // }
         foreach($reportList as $report) {
             $data[$report['employee_code']]['full_name'] = $report['full_name'];
-            $data[$report['employee_code']][$report['date']] = $report['working_hours'];
+            $data[$report['employee_code']][$report['date']]['working_hours'] = $report['working_hours'];
             $data[$report['employee_code']]['total'] = $report['hour'];
+            $data[$report['employee_code']][$report['date']]['status'] = $report['status'];
         }
         // $lackEmployee = array_diff_key($listFullEmployees, $data);
         // foreach ($lackEmployee as $code => $name) {
@@ -244,7 +248,6 @@ class Employee extends Model
         //         $data[$code][$date] = 0.0;
         //     }
         // }
-
         return $data;
     }
 
@@ -264,11 +267,11 @@ class Employee extends Model
     public static function getReportDataOvertime($dateFilter, $searchValue) {
         $data = [];
         $reportList = self::leftJoin('attendances', 'employees.id', 'attendances.employee_id')
-        ->leftJoin('leaves', 'employees.id', 'leaves.employee_id')
         ->select(
                 'employees.full_name',
                 'employees.employee_code',
                 'attendances.overtime',
+                'attendances.status',
                 DB::raw('DATE(attendances.date) as date'),
                 DB::raw('SUM(overtime) over (partition by employee_code, date_format(date, "%Y-%m")) as hour'),
         )->where('date', 'like', $dateFilter.'%')
@@ -284,8 +287,9 @@ class Employee extends Model
 
         foreach($reportList as $report) {
             $data[$report['employee_code']]['full_name'] = $report['full_name'];
-            $data[$report['employee_code']][$report['date']] = $report['overtime'];
+            $data[$report['employee_code']][$report['date']]['working_hours'] = $report['overtime'];
             $data[$report['employee_code']]['total'] = $report['hour'];
+            $data[$report['employee_code']][$report['date']]['status'] = $report['status'];
         }
 
 
@@ -296,10 +300,10 @@ class Employee extends Model
     public static function getReportDataTotal($dateFilter, $searchValue) {
         $data = [];
         $reportList = self::leftJoin('attendances', 'employees.id', 'attendances.employee_id')
-        ->leftJoin('leaves', 'employees.id', 'leaves.employee_id')
         ->select(
                 'employees.full_name',
                 'employees.employee_code',
+                'attendances.status',
                 DB::raw('SUM(working_hours + overtime) as total_hours'),
                 DB::raw('DATE(attendances.date) as date'),
                 DB::raw('SUM(working_hours + overtime) over (partition by employee_code, date_format(date, "%Y-%m")) as hour'),
@@ -316,12 +320,116 @@ class Employee extends Model
 
         foreach($reportList as $report) {
             $data[$report['employee_code']]['full_name'] = $report['full_name'];
-            $data[$report['employee_code']][$report['date']] = $report['total_hours'];
+            $data[$report['employee_code']][$report['date']]['working_hours'] = $report['total_hours'];
             $data[$report['employee_code']]['total'] = $report['hour'];
+            $data[$report['employee_code']][$report['date']]['status'] = $report['status'];
         }
 
 
         return $data;
     }
 
+    public static function getCurrentEmployeeCode()
+    {
+        return self::where('user_id', Auth::user()->id)->value('employee_code');
+    }
+
+    public static function getReportDataAttendanceByID($dateFilter, $searchValue)
+    {
+        $code = self::getCurrentEmployeeCode();
+        $data = [];
+        $reportList = self::leftJoin('attendances', 'employees.id', 'attendances.employee_id')
+        ->select(
+                'employees.full_name',
+                'employees.employee_code',
+                'attendances.working_hours',
+                'attendances.status',
+                DB::raw('DATE(attendances.date) as date'),
+                DB::raw('SUM(working_hours) over (partition by employee_code, date_format(date, "%Y-%m")) as hour'),
+        )->where('date', 'like', $dateFilter.'%')->where('employee_code', $code)
+        ->groupBy('employee_code', 'date');
+        if (isset($searchValue)) {
+            $reportList = $reportList->where(function($query) use ($searchValue) {
+                $query->where('full_name', 'like', '%'.$searchValue.'%')
+                    ->orWhere('employee_code', 'like', '%'.$searchValue.'%');
+            });
+        }
+        $reportList = $reportList->orderBy('employee_code')->get();
+        $reportList = collect($reportList)->toArray();
+        
+        foreach($reportList as $report) {
+            $data[$report['employee_code']]['full_name'] = $report['full_name'];
+            $data[$report['employee_code']][$report['date']]['working_hours'] = $report['working_hours'];
+            $data[$report['employee_code']]['total'] = $report['hour'];
+            $data[$report['employee_code']][$report['date']]['status'] = $report['status'];
+        }
+    
+        return $data;
+    }
+
+    public static function getReportDataOvertimeByID($dateFilter, $searchValue) {
+        $code = self::getCurrentEmployeeCode();
+        $data = [];
+        $reportList = self::leftJoin('attendances', 'employees.id', 'attendances.employee_id')
+        ->select(
+                'employees.full_name',
+                'employees.employee_code',
+                'attendances.overtime',
+                'attendances.status',
+                DB::raw('DATE(attendances.date) as date'),
+                DB::raw('SUM(overtime) over (partition by employee_code, date_format(date, "%Y-%m")) as hour'),
+        )->where('date', 'like', $dateFilter.'%')->where('employee_code', $code)
+        ->groupBy('employee_code', 'date');
+        if (isset($searchValue)) {
+            $reportList = $reportList->where(function($query) use ($searchValue) {
+                $query->where('full_name', 'like', '%'.$searchValue.'%')
+                    ->orWhere('employee_code', 'like', '%'.$searchValue.'%');
+            });
+        }
+        $reportList = $reportList->orderBy('employee_code')->get();
+        $reportList = collect($reportList)->toArray();
+
+        foreach($reportList as $report) {
+            $data[$report['employee_code']]['full_name'] = $report['full_name'];
+            $data[$report['employee_code']][$report['date']]['working_hours'] = $report['overtime'];
+            $data[$report['employee_code']]['total'] = $report['hour'];
+            $data[$report['employee_code']][$report['date']]['status'] = $report['status'];
+        }
+
+
+        return $data;
+    }
+
+    public static function getReportDataTotalByID($dateFilter, $searchValue) {
+        $code = self::getCurrentEmployeeCode();
+        $data = [];
+        $reportList = self::leftJoin('attendances', 'employees.id', 'attendances.employee_id')
+        ->select(
+                'employees.full_name',
+                'employees.employee_code',
+                'attendances.status',
+                DB::raw('SUM(working_hours + overtime) as total_hours'),
+                DB::raw('DATE(attendances.date) as date'),
+                DB::raw('SUM(working_hours + overtime) over (partition by employee_code, date_format(date, "%Y-%m")) as hour'),
+        )->where('date', 'like', $dateFilter.'%')->where('employee_code', $code)
+        ->groupBy('employee_code', 'date');
+        if (isset($searchValue)) {
+            $reportList = $reportList->where(function($query) use ($searchValue) {
+                $query->where('full_name', 'like', '%'.$searchValue.'%')
+                    ->orWhere('employee_code', 'like', '%'.$searchValue.'%');
+            });
+        }
+        $reportList = $reportList->orderBy('employee_code')->get();
+        $reportList = collect($reportList)->toArray();
+
+        foreach($reportList as $report) {
+            $data[$report['employee_code']]['full_name'] = $report['full_name'];
+            $data[$report['employee_code']][$report['date']]['working_hours'] = $report['total_hours'];
+            $data[$report['employee_code']]['total'] = $report['hour'];
+            $data[$report['employee_code']][$report['date']]['status'] = $report['status'];
+        }
+
+
+        return $data;
+    }
 }

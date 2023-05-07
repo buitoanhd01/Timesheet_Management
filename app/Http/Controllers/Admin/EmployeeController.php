@@ -42,13 +42,13 @@ class EmployeeController extends Controller
             'fullName'      => 'required|max:255',
             'email'         => 'required|email',
             'employee_code' => 'required|unique:employees,employee_code',
-            'tax_code'      => 'required|numeric|unique:employees,employee_code',
+            'tax_code'      => 'required|numeric',
             'phoneNumber'   => 'required|regex:/^[0-9]{10,11}$/',
             'address'       => 'required',
             'start_time'    => 'required|date',
             'birthday'      => 'date',
-            'position'      => [Rule::exists('positions', 'id')],
-            'department'    => [Rule::exists('departments', 'id')],
+            'position'      => $request->filled('position') ? [Rule::exists('positions', 'id')] : '',
+            'department'    => $request->filled('department') ? [Rule::exists('departments', 'id')] : '',
         ]);
         $params = $request->all();
         if (isset($params['newAccount'])) {
@@ -62,6 +62,8 @@ class EmployeeController extends Controller
             ]);
             $user = User::find($id);
             $user->assignRole($params['role']);
+        } else {
+            $id = -1;
         }
         $employee = new Employee([
             'first_name'    =>  $request->input('firstName'),

@@ -22,6 +22,9 @@ class Setting extends Model
 
     public static function getDefaultPassword()
     {
-        return self::first()->value('password_default');
+        $data = self::first()->value('password_default');
+        if (!isset($data))
+        $data = '1234567890';
+        return $data;
     }
 }

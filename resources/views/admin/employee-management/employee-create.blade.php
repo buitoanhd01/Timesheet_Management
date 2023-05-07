@@ -20,7 +20,7 @@
               id="uploadedAvatar"
             />
             <div class="button-wrapper">
-              <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+              {{-- <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                 <span class="d-none d-sm-block">Upload new photo</span>
                 <i class="bx bx-upload d-block d-sm-none"></i>
                 <input
@@ -36,7 +36,7 @@
                 <span class="d-none d-sm-block">Reset</span>
               </button>
 
-              <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+              <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> --}}
             </div>
           </div>
         </div>
@@ -187,7 +187,6 @@
                   name="username"
                   value=""
                   placeholder=""
-                  required
                 />
               </div>
               <div class="col-md-6 mb-3 new-account" id="account_type" role="group" aria-label="Basic radio toggle button group">
@@ -213,9 +212,8 @@
 @section('scripts')
     <script type="text/javascript">
       $('.daterangepicker').datepicker({
-        dateFormat: "yy/mm/dd",
-        changeMonth: true,
-        changeYear: true,
+        format: "yyyy/mm/dd",
+        autoclose:true
       });
     </script>
     <script src="{{ asset('js/user_profile.js') }}"></script>

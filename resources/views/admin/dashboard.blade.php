@@ -96,13 +96,8 @@
                     </div>
                   </div>
                 </div>
-                @if(auth()->user()->hasPermissionTo('manage-general'))
-                <span>Working Hour</span>
-                <h3 class="card-title text-nowrap mb-1"></h3>
-                @else
-                <span>Working Hour</span>
-                <h3 class="card-title text-nowrap mb-1"></h3>
-                @endif
+                <span class="fw-semibold">Working Hour</span>
+                <h3 class="card-title text-nowrap mb-1">2</h3>
                 {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> --}}
               </div>
             </div>
@@ -155,8 +150,8 @@
                     </div>
                   </div>
                 </div>
-                <span class="d-block mb-1">Overtime</span>
-                <h3 class="card-title text-nowrap mb-2">2H</h3>
+                <span class="d-block mb-1 fw-semibold">Overtime</span>
+                <h3 class="card-title text-nowrap mb-2">2</h3>
               </div>
             </div>
           </div>
@@ -184,70 +179,54 @@
                     </div>
                   </div>
                 </div>
-                <span class="fw-semibold d-block mb-1">Leave</span>
-                <h3 class="card-title mb-2">2</h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title d-flex align-items-start justify-content-between">
-                  <div class="avatar flex-shrink-0">
-                    <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                  </div>
-                  <div class="dropdown">
-                    <button
-                      class="btn p-0"
-                      type="button"
-                      id="cardOpt1"
-                      data-bs-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                      <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                      <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                    </div>
-                  </div>
-                </div>
-                <span class="fw-semibold d-block mb-1">Number Employee</span>
-                <h3 class="card-title mb-2">2</h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title d-flex align-items-start justify-content-between">
-                  <div class="avatar flex-shrink-0">
-                    <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                  </div>
-                  <div class="dropdown">
-                    <button
-                      class="btn p-0"
-                      type="button"
-                      id="cardOpt1"
-                      data-bs-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                      <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                      <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                    </div>
-                  </div>
-                </div>
-                <span class="fw-semibold d-block mb-1">Number Department</span>
+                <span class="fw-semibold d-block mb-1">Total Hour</span>
                 <h3 class="card-title mb-2">2</h3>
               </div>
             </div>
           </div>
           <!-- </div><div class="row"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active" style="height: 250px">
+              <img class="d-block w-100" src="../assets/img/elements/13.jpg" alt="First slide" />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>First slide</h3>
+                <p>Eos mutat malis maluisset et, agam ancillae quo te, in vim congue pertinacia.</p>
+              </div>
+            </div>
+            <div class="carousel-item" style="height: 250px">
+              <img class="d-block w-100" src="../assets/img/elements/2.jpg" alt="Second slide" />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Second slide</h3>
+                <p>In numquam omittam sea.</p>
+              </div>
+            </div>
+            <div class="carousel-item" style="height: 250px">
+              <img class="d-block w-100" src="../assets/img/elements/18.jpg" alt="Third slide" />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Third slide</h3>
+                <p>Lorem ipsum dolor sit amet, virtute consequat ea qui, minim graeco mel no.</p>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </a>
         </div>
       </div>
     </div>

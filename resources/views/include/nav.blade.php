@@ -22,7 +22,7 @@
     <!-- Calendar -->
     @if(auth()->user()->can('manage-request'))
     <li class="menu-item">
-      <a href="#" class="menu-link">
+      <a href="{{ route('admin-request') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-mail-send"></i>
         <div data-i18n="Request">Leave Management</div>
       </a>
@@ -38,14 +38,14 @@
     </li>
     @endif
 
-    @if(auth()->user()->can('manage-request'))
+    {{-- @if(auth()->user()->can('manage-request'))
     <li class="menu-item">
       <a href="#" class="menu-link">
         <i class="menu-icon tf-icons bx bx-money"></i>
         <div data-i18n="Request">Salary Management</div>
       </a>
     </li>
-    @endif
+    @endif --}}
     
     @if(auth()->user()->can('manage-employee manage-user manage-role'))
     <li class="menu-header small text-uppercase">
@@ -108,9 +108,9 @@
     <!-- Request -->
     @if(auth()->user()->can('using'))
     <li class="menu-item">
-      <a href="#" class="menu-link">
+      <a href="{{ route('employee-report') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-credit-card"></i>
-        <div data-i18n="Salary">My Salary</div>
+        <div data-i18n="my-report">My Report</div>
       </a>
     </li>
     @endif
