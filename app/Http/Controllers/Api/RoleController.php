@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -46,5 +47,27 @@ class RoleController extends Controller
         $role->syncPermissions([]);
         $role->delete();
         return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
+    }
+
+    public function getListPermisionByRoleID(Request $request)
+    {
+        $param = $request->all();
+        $id = $param['id'];
+        $role = Role::find($id);
+        $list_permision = $role->permissions->pluck('name');
+        $all_permission = Permission::all()->pluck('name');
+        if ($list_permision)
+            return response()->json(['list_permision' => $list_permision, 'all_permission' => $all_permission] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function updatePermission(Request $request)
+    {
+        $param = $request->all();
+        $id = $param['role_id'];
+        $role = Role::find($id);
+        $permission = isset($param['checkBoxs']) ? $param['checkBoxs'] : [];
+        $role->syncPermissions($permission);
+            return response()->json(['status_code' => 200] ,200);
     }
 }

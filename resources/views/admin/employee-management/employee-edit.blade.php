@@ -182,7 +182,7 @@
               <div class="mb-3 col-md-6">
                 <label for="position" class="form-label">Position</label>
                 <select id="position" name="position" class="select2 form-select">
-                  @empty($employee->position)
+                  @empty($employee->positions)
                   <option value="">Select Position</option>
                   @endempty
                   @isset($positions)

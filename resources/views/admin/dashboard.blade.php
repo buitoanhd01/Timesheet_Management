@@ -63,7 +63,7 @@
                   </div>
                 </div>
                 <span class="fw-semibold d-block mb-1">Wrong Time</span>
-                <h3 class="card-title mb-2">2</h3>
+                <h3 class="card-title mb-2" id="wrong_time">0</h3>
                 {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> --}}
               </div>
             </div>
@@ -97,7 +97,7 @@
                   </div>
                 </div>
                 <span class="fw-semibold">Working Hour</span>
-                <h3 class="card-title text-nowrap mb-1">2</h3>
+                <h3 class="card-title text-nowrap mb-1" id="working_hours">0</h3>
                 {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> --}}
               </div>
             </div>
@@ -151,7 +151,7 @@
                   </div>
                 </div>
                 <span class="d-block mb-1 fw-semibold">Overtime</span>
-                <h3 class="card-title text-nowrap mb-2">2</h3>
+                <h3 class="card-title text-nowrap mb-2" id="overtime">0</h3>
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@
                   </div>
                 </div>
                 <span class="fw-semibold d-block mb-1">Total Hour</span>
-                <h3 class="card-title mb-2">2</h3>
+                <h3 class="card-title mb-2" id="total_hour">0</h3>
               </div>
             </div>
           </div>
@@ -200,21 +200,21 @@
             <div class="carousel-item active" style="height: 250px">
               <img class="d-block w-100" src="../assets/img/elements/13.jpg" alt="First slide" />
               <div class="carousel-caption d-none d-md-block">
-                <h3>First slide</h3>
+                <h3>Company Image</h3>
                 <p>Eos mutat malis maluisset et, agam ancillae quo te, in vim congue pertinacia.</p>
               </div>
             </div>
             <div class="carousel-item" style="height: 250px">
               <img class="d-block w-100" src="../assets/img/elements/2.jpg" alt="Second slide" />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Second slide</h3>
+                <h3>Company Image 2</h3>
                 <p>In numquam omittam sea.</p>
               </div>
             </div>
             <div class="carousel-item" style="height: 250px">
               <img class="d-block w-100" src="../assets/img/elements/18.jpg" alt="Third slide" />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Third slide</h3>
+                <h3>Company Image 3</h3>
                 <p>Lorem ipsum dolor sit amet, virtute consequat ea qui, minim graeco mel no.</p>
               </div>
             </div>

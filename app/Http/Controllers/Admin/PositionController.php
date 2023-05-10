@@ -33,4 +33,24 @@ class PositionController extends Controller
         $position->save();
         return redirect()->route('admin-position-management')->with('success', 'Thêm Chức vụ thành công!');
     }
+
+    public function showEditPositionForm(Request $request, $id)
+    {
+        $position = Position::find($id);
+        return view('admin.position.position-edit',['position' => $position]);
+    }
+
+    public function editPosition(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'position_name' => ['required', 'string', 'max:255'],
+            'position_description' => ['string'],
+        ]);
+        $position = Position::find($id);
+        $position->position_name = $request->input('position_name');
+        $position->position_description = $request->input('position_description');
+
+        $position->save();
+        return redirect()->route('admin-position-management')->with('success', 'Sửa Chức vụ thành công!');
+    }
 }

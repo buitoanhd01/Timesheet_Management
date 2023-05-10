@@ -22,4 +22,11 @@ class Position extends Model
         ->select('positions.*', 'employees.full_name as name')
         ->get();
     }
+
+    public static function getListPositionsAvailable()
+    {
+        return self::leftJoin('employees', 'employees.position_id', 'positions.id')
+        ->select('positions.*')->whereNull('employees.position_id')
+        ->get();
+    }
 }

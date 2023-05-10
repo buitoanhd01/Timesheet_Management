@@ -87,11 +87,12 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'manage-employee']);
         Permission::create(['name' => 'manage-user']);
         Permission::create(['name' => 'manage-department']);
-        Permission::create(['name' => 'manage-salary']);
+        Permission::create(['name' => 'manage-report']);
+        Permission::create(['name' => 'manage-position']);
         Permission::create(['name' => 'using']);
         Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'employee']);
+        Role::create(['name' => 'admin'])->givePermissionTo('manage-request manage-employee using');
+        Role::create(['name' => 'employee'])->givePermissionTo('using');;
         $user->assignRole('super-admin');
         $user2->assignRole('employee');
         $user->givePermissionTo(Permission::all());

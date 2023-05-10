@@ -140,6 +140,13 @@ class Employee extends Model
         ]);
     }
 
+    public static function deleteEmployeeUserPositionID($id)
+    {
+        return self::where('position_id', $id)->update([
+            'position_id'   => -1
+        ]);
+    }
+
     public static function getEmployeeByID($id)
     {
         return self::leftJoin('departments', 'employees.department_id', 'departments.id')

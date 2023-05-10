@@ -156,7 +156,7 @@
     @if(auth()->user()->can('using'))
     <li class="menu-item">
       <a href="{{ route('my-account')}}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-collection"></i>
+        <i class="menu-icon tf-icons bx bxs-user-account"></i>
         <div data-i18n="Settings">My Account</div>
       </a>
     </li>
@@ -165,7 +165,7 @@
     @if(auth()->user()->can('using'))
     <li class="menu-item">
       <a href="{{ route('my-profile-show')}}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-collection"></i>
+        <i class="menu-icon tf-icons bx bxs-user-detail"></i>
         <div data-i18n="Settings">My Profie</div>
       </a>
     </li>

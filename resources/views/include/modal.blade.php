@@ -200,6 +200,7 @@
       </div>
       <div class="modal-body">
         <form>
+          <input type="hidden" id="role_id_hidden" value="">
           <div class="form-group mb-3">
             <label for="leave_type" class="form-label">Leave Type:</label>
             <select class="form-control" id="leave_type">
@@ -228,6 +229,43 @@
           Close
         </button>
         <button type="button" class="btn btn-primary" id="submit-leave-request">Send Request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalRole" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leaveRequestModalLabel">Edit Pemission For <span class="role-name"></span></h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Choose</th>
+                <th>Pemission Name</th>
+              </tr>
+            </thead>
+            <tbody id="permission_list">
+              
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="submit-permission">Save</button>
       </div>
     </div>
   </div>

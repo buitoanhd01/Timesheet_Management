@@ -10,12 +10,19 @@ function loadDashboard() {
         // $('.loading-effect').show();
       },
       success: function(data) {
+        let dashboard_data = data.attendance_by_month;
+        $('#working_hours').empty().html(dashboard_data.working_hours);
+        $('#overtime').empty().html(dashboard_data.overtime);
+        $('#total_hour').empty().html(dashboard_data.total);
+        $('#wrong_time').empty().html(data.wrong_time);
         let html = '';
         let status = '';
         let item = data.attendance;
-        if (data.status_code == '401') {
+        if (typeof item != 'undefined' || item == 'null') {
             html = '<tr><td>No Data</td></tr>';
           } else {
+            let first_checkin = (item.first_checkin) ? item.first_checkin : '<span class="badge bg-label-info me-1">Not Yet Check In</span>';
+            let last_checkout = (item.last_checkout) ? item.last_checkout : '<span class="badge bg-label-info me-1">Not Yet Check Out</span>';
             switch (item.status) {
                 case 0:
                   status = '<td class="text-center"><span class="badge bg-label-success me-1">On Time</span></td>';
@@ -33,8 +40,8 @@ function loadDashboard() {
                   status = '<td class="text-center"><span class="badge bg-label-infor me-1">Leaved</span></td>';
               }
               html +='<tr>'
-            +  '<td>' + item.first_checkin + '</td>'
-            +  '<td>' + item.last_checkout + '</td>'
+            +  '<td>' + first_checkin + '</td>'
+            +  '<td>' + last_checkout + '</td>'
              + status
             +'</tr>'
           }

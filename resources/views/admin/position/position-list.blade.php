@@ -24,20 +24,7 @@
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0" id="position_list">
-                @isset($listPositions)
-                  @foreach($listPositions as $key => $position)
-                  <tr>
-                    <td>{{ $key + 1}}</td>
-                    <td>{{ $position->position_name }}</td>
-                    <td>{{ $position->position_description }}</td>
-                    <td>{{ $position->name }}</td>
-                    <td>
-                      <button type="button" class="btn btn-primary btn-sm btn-edit-custom">Edit</button>
-                      <button type="button" class="btn btn-danger btn-sm ">Delete</button>
-                    </td>
-                  </tr>
-                  @endforeach
-                @endisset
+                  
               </tbody>
             </table>
         </div>
@@ -46,5 +33,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/department.js') }}"></script>
+    <script src="{{ asset('js/position.js') }}"></script>
 @endsection

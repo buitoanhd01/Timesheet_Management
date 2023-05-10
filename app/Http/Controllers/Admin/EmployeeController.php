@@ -25,7 +25,7 @@ class EmployeeController extends Controller
     public function showCreateEmployeeForm(Request $request)
     {
         $data['department'] = Department::all();
-        $data['position']   = Position::all();
+        $data['position']   = Position::getListPositionsAvailable();
         $data['role'] = Role::all();
         return view('admin.employee-management.employee-create', [
             'roles'             => $data['role'],
@@ -93,7 +93,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::getEmployeeByID($id);
         $user = User::find($employee->user_id);
-        $position = Position::all();
+        $position = Position::getListPositionsAvailable();
         $department = Department::all();
         return view('admin.employee-management.employee-edit', 
         [

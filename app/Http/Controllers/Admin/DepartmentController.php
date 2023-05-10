@@ -36,4 +36,24 @@ class DepartmentController extends Controller
         $department->save();
         return redirect()->route('admin-department-management')->with('success', 'Thêm Phòng Ban thành công!');
     }
+
+    public function showEditDepartmentForm(Request $request, $id)
+    {
+        $department = Department::find($id);
+        return view('admin.department.department-edit',['department' => $department]);
+    }
+
+    public function editDepartment(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'department_name' => ['required', 'string', 'max:255'],
+            'department_description' => ['string', 'max:255'],
+        ]);
+        $department = Department::find($id);
+        $department->department_name = $request->input('department_name');
+        $department->department_description = $request->input('department_description');
+
+        $department->save();
+        return redirect()->route('admin-department-management')->with('success', 'Sửa Phòng Ban thành công!');
+    }
 }

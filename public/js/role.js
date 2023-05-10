@@ -19,8 +19,8 @@
                 +  '<td>' + item.name + '</td>'
                 +  '<td class=" d-flex justify-content-center">'
                 // +    '<button type="button" class="me-1 btn btn-primary btn-sm btn-edit-custom">Edit</button>'
-                +    '<button type="button" id="btn_delete_role" class="btn btn-danger btn-sm me-1" data-id="' + item.id +'">Delete</button>'
-                // +    '<button type="button" class="btn btn-warning btn-sm">Permission</button>'
+                +    '<button type="button" class="btn btn-danger btn-sm me-1 btn_delete_role" data-id="' + item.id +'">Delete</button>'
+                +    '<button type="button" class="btn btn-warning btn-sm btn-permission" data-id="' + item.id +'">Permission</button>'
                 +  '</td>'
                 +'</tr>'
                 });
@@ -84,7 +84,7 @@
         });
     });
 
-    $(document).on('click', '#btn_delete_role', function(e) {
+    $(document).on('click', '.btn_delete_role', function(e) {
       let role_id = $(this).data('id');
       Swal.fire({
         title: 'Are you sure?',
@@ -136,5 +136,85 @@
         }
       })
         
+    });
+
+    $(document).on('click', '.btn-permission', function (e) {
+      let role_id = $(this).data('id');
+      $('#role_id_hidden').val(role_id);
+      $.ajax({
+        url: '/api/get_role_list_by_id/', // đường dẫn tới tệp JSON trên máy chủ
+        method: 'GET',
+        dataType: 'json', // định dạng dữ liệu là JSON
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        data:{
+          id: role_id
+        },
+        beforeSend: function(){
+          $('.loading-effect').show();
+        },
+        success: function(data) {
+          // Xử lý dữ liệu khi tải về thành công
+          let html = '';
+          $.each(data.all_permission,function (idx, item) {
+            html +='<tr>'
+          +  '<td><input type="checkbox" name="permission" class="form-check-input" value="' + item +'"></td>'
+          +  '<td>' + item +'</td>'
+          +'</tr>'
+          });
+          $('#permission_list').empty().html(html);
+          $.each(data.list_permision,function (idx, item) {
+            $('#permission_list input[value="' + item + '"]').attr('checked', true);
+          });
+          $('.loading-effect').hide();
+          $('#modalRole').modal('show');
+        },
+        error: function() {
+          // Xử lý lỗi khi tải dữ liệu thất bại
+          alert('Lỗi khi tải dữ liệu');
+          $('.loading-effect').hide();
+        }
+    });
+    });
+
+    $(document).on('click', '#submit-permission', function (e) {
+      let role_id = $('#role_id_hidden').val();
+      let checkBoxs = [];
+      $('#permission_list tr').each(function() {
+        var checkbox = $(this).find('input[type="checkbox"]');
+        if (checkbox.is(':checked')) {
+          checkBoxs.push(checkbox.val());
+        } else {
+
+        }
+      });
+      checkBoxs = [...new Set(checkBoxs)];
+      $.ajax({
+        url: '/api/update_permission', // đường dẫn tới tệp JSON trên máy chủ
+        method: 'GET',
+        dataType: 'json', // định dạng dữ liệu là JSON
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        data:{
+          checkBoxs: checkBoxs,
+          role_id: role_id
+        },
+        beforeSend: function(){
+          $('.loading-effect').show();
+        },
+        success: function(data) {
+          // Xử lý dữ liệu khi tải về thành công
+          
+          $('.loading-effect').hide();
+          $('#modalRole').modal('hide');
+        },
+        error: function() {
+          // Xử lý lỗi khi tải dữ liệu thất bại
+          alert('Lỗi khi tải dữ liệu');
+          $('.loading-effect').hide();
+        }
+    });
     });
 })(jQuery);

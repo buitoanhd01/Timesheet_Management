@@ -2,7 +2,7 @@
     loadTable();
       function loadTable() {
           $.ajax({
-              url: '/api/get_department_list', // đường dẫn tới tệp JSON trên máy chủ
+              url: '/api/get_position_list', // đường dẫn tới tệp JSON trên máy chủ
               method: 'GET',
               dataType: 'json', // định dạng dữ liệu là JSON
               data: {
@@ -15,23 +15,25 @@
                 // Xử lý dữ liệu khi tải về thành công
                 let html = '';
                 let status = '';
-                if (typeof data.list_department !== 'undefined' && data.list_department.length <= 0) {
+                let name
+                if (typeof data.list_position !== 'undefined' && data.list_position.length <= 0) {
                   html = '<tr><td>No Data</td></tr>';
                 } else {
-                  $.each(data.list_department,function (idx, item) {
+                  $.each(data.list_position,function (idx, item) {
+                    name = (item.name) ? item.name : '<span class="badge bg-label-warning me-1">No Assignment Yet</span>';
                     html +='<tr>'
                   +  '<td>' + (idx + 1) + '</td>'
-                  +  '<td>' + item.department_name + '</td>'
-                  +  '<td>' + item.department_description + '</td>'
-                  +  '<td>' + item.num_employees + '</td>'
+                  +  '<td>' + item.position_name + '</td>'
+                  +  '<td>' + item.position_description + '</td>'
+                  +  '<td>' + name + '</td>'
                   +  '<td>'
-                  +    '<a href="/admin/department/edit/'+ item.id + '" type="button" class="btn btn-primary btn-sm btn-edit-custom">Edit</a>'
+                  +    '<a href="/admin/position/edit/'+ item.id + '" type="button" class="btn btn-primary btn-sm btn-edit-custom me-2">Edit</a>'
                   +    '<button type="button" class="btn btn-danger btn-sm btn-delete-department" data-id="' + item.id +'">Delete</button>'
                   +  '</td>'
                   +'</tr>'
                   });
                 }
-                $('#department_list').empty().html(html);
+                $('#position_list').empty().html(html);
                 $('.loading-effect').hide();
               },
               error: function() {
@@ -55,7 +57,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '/api/delete_department', // đường dẫn tới tệp JSON trên máy chủ
+              url: '/api/delete_position', // đường dẫn tới tệp JSON trên máy chủ
               method: 'POST',
               dataType: 'json', // định dạng dữ liệu là JSON
               headers: {

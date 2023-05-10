@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CalendarController extends Controller
 {
@@ -117,8 +118,20 @@ class CalendarController extends Controller
     {
         $employee_id = Employee::getCurrentEmployeeID();
         $attendance = Attendance::where(['employee_id' => $employee_id, 'date' => date('Y-m-d')])->first();
-        if ($attendance)
-            return response()->json(['attendance' => $attendance] ,200);
+        $wrong_time = Attendance::where(['employee_id' => $employee_id])->where('date', 'like', date('Y-m').'%')
+        ->where('status', '!=', '0')
+        ->count();
+        $attendanceByMonth = Attendance::where(['employee_id' => $employee_id])->where('date', 'like', date('Y-m').'%')
+        ->select(
+            DB::raw('SUM(overtime) as overtime'),
+            DB::raw('SUM(working_hours) as working_hours'),
+            DB::raw('SUM(working_hours + overtime) as total')
+        )->first();
+        $attendanceByMonth->overtime = round($attendanceByMonth->overtime, 2);
+        $attendanceByMonth->working_hours = round($attendanceByMonth->working_hours, 2);
+        $attendanceByMonth->total = round($attendanceByMonth->total, 2);
+        if ($attendanceByMonth)
+            return response()->json(['attendance' => $attendance, 'attendance_by_month' => $attendanceByMonth, 'wrong_time' => $wrong_time] ,200);
         return response()->json(['status_code' => 401, 'message' => 'No DATA'] ,200);
     }
 }

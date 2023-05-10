@@ -41,6 +41,12 @@ Route::get('/get_employee_list', [App\Http\Controllers\Api\EmployeeController::c
 Route::get('/get_role_list', [App\Http\Controllers\Api\RoleController::class, 'getListRoles'])
 ->name('get_role_list');
 
+Route::get('/get_role_list_by_id', [App\Http\Controllers\Api\RoleController::class, 'getListPermisionByRoleID'])
+->name('get_role_list_by_id');
+
+Route::get('/update_permission', [App\Http\Controllers\Api\RoleController::class, 'updatePermission'])
+->name('update_permission');
+
 Route::post('/add_role', [App\Http\Controllers\Api\RoleController::class, 'addRole'])
 ->name('add_role');
 
@@ -73,3 +79,12 @@ Route::get('/get_report_attendances', [App\Http\Controllers\Api\ReportController
 
 Route::post('/update_status_request', [App\Http\Controllers\Api\RequestController::class, 'updateStatusRequest'])
 ->name('update_status_request');
+
+Route::post('/delete_department', [App\Http\Controllers\Api\DepartmentController::class, 'deleteDepartment'])
+->name('delete_department');
+
+Route::post('/delete_position', [App\Http\Controllers\Api\PositionController::class, 'deletePosition'])
+->name('delete_position');
+
+Route::get('/get_position_list', [App\Http\Controllers\Api\PositionController::class, 'getListPositions'])
+->name('get_position_list');
