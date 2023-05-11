@@ -57,7 +57,19 @@ class RoleController extends Controller
         $list_permision = $role->permissions->pluck('name');
         $all_permission = Permission::all()->pluck('name');
         if ($list_permision)
-            return response()->json(['list_permision' => $list_permision, 'all_permission' => $all_permission] ,200);
+            return response()->json(['list_permision' => $list_permision, 'all_permission' => $all_permission, 'role' => $role->name] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function getListPermisionByUserID(Request $request)
+    {
+        $param = $request->all();
+        $id = $param['id'];
+        $user = User::find($id);
+        $list_permision = $user->permissions->pluck('name');
+        $all_permission = Permission::all()->pluck('name');
+        if ($list_permision)
+            return response()->json(['list_permision' => $list_permision, 'all_permission' => $all_permission, 'user' => $user->name] ,200);
         return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
 

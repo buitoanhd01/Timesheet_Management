@@ -40,52 +40,28 @@
       <div class="modal-body">
         <div class="card">
           <div class="table-responsive text-nowrap" style="min-height: 250px;max-height: 25s0px">
+            <form action="" id="form-assign">
+              <input type="hidden" id="user_id_hidden" value="">
               <table class="table table-layout-fixed table-bordered">
                 <thead class="sticky-top">
                   <tr>
-                    <th class="col-1"></th>
+                    <th class="col-1">Select</th>
                     <th class="col-3">Employee Code</th>
                     <th class="col-4">Employee Name</th>
                   </tr>
                 </thead>
-                <tbody class="table-border-bottom-0" id="">
-                  <tr>
-                    <td>
-                      <input type="radio" name="assign_user">
-                    </td>
-                    <td>NV001</td>
-                    <td>Phan Trường</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="radio" name="assign_user">
-                    </td>
-                    <td>NV001</td>
-                    <td>Phan Trường</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="radio" name="assign_user">
-                    </td>
-                    <td>NV001</td>
-                    <td>Phan Trường</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="radio" name="assign_user">
-                    </td>
-                    <td>NV001</td>
-                    <td>Phan Trường</td>
-                  </tr>
+                <tbody class="table-border-bottom-0" id="employee_no_account">
+                  
                 </tbody>
               </table>
+            </form>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary mt-4" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary mt-4">Save changes</button>
+        <button type="button" class="btn btn-primary mt-4" id="btn_save_assign">Save changes</button>
       </div>
     </div>
   </div>
@@ -238,7 +214,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="leaveRequestModalLabel">Edit Pemission For <span class="role-name"></span></h5>
+        <h5 class="modal-title" id="leaveRequestModalLabel">Edit Pemission For <span id="role_name" class="text-info text-capitalize"></span></h5>
         <button
           type="button"
           class="btn-close"

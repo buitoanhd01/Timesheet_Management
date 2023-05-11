@@ -40,4 +40,25 @@ class EmployeeController extends Controller
         }
         return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
+
+    public function getListEmployeesNoAccount(Request $request)
+    {
+        $param = $request->all();
+        $listEmployee = Employee::whereNull('user_id')->orWhere('user_id', '<' ,'0')->get();
+        if ($listEmployee)
+            return response()->json(['list_employee' => $listEmployee] ,200);
+        return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
+    }
+
+    public function assignUser(Request $request)
+    {
+        $param = $request->all();
+        $user_id = $param['user_id'];
+        $employee_id = isset($param['employee_id']) ? $param['employee_id'] : '';
+        $employee = Employee::find($employee_id);
+
+        $employee->user_id = $user_id;
+        $employee->save();
+        return response()->json(['status_code' => 200, 'message' => 'SUCCESSFULLY'] ,200);
+    }
 }
