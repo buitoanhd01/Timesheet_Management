@@ -246,3 +246,38 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalEditTime" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leaveRequestModalLabel">Edit Attendance</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" id="employee_id_hidden" value="">
+          <div class="form-group mb-3">
+            <label for="check_in" class="form-label">Check In:</label>
+            <input type="text" class="form-control" id="check_in" placeholder="Check In">
+          </div>
+          <div class="form-group mb-3">
+            <label for="check_out" class="form-label">Check out:</label>
+            <input type="text" class="form-control" id="check_out" placeholder="Check Out">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="submit-edit-attendance">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

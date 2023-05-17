@@ -62,7 +62,7 @@
 
 						<div>
 							<a href="#" class="txt1">
-								Forgot Password?
+								
 							</a>
 						</div>
 					</div>

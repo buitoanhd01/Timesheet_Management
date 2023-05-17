@@ -172,7 +172,7 @@ class Attendance extends Model
         if ($time1 != 'null' && $time2 != 'null') {
             $time1 = strtotime($time1);
             $time2 = strtotime($time2);
-            if (($time1 - $time2) / 60 < 1) {
+            if (($time1 - $time2) / 60 < 0) {
                 return round(1 - ($time1 - $time2) / 60);
             }
         }

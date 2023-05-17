@@ -20,6 +20,7 @@
       @foreach($date_data as $date)
       @php
           $dayOfWeek = date('l', strtotime($date));
+          $dateNew = date('Y-m-d 00:00:00', strtotime($date));
       @endphp
       <td class="data-date text-center 
       @if($dayOfWeek == 'Saturday' || $dayOfWeek == 'Sunday') weekend @endif @if(isset($report[$date]['status']) && $report[$date]['status'] != 0) bg-warning @endif">

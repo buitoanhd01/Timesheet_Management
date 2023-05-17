@@ -158,7 +158,7 @@
           // Xử lý dữ liệu khi tải về thành công
           $('#modalRole #role_name').empty().html(data.role);
           let html = '';
-          let checked = (data.role == 'super-admin') ? 'checked' : '';
+          let checked = (data.role == 'super-admin') ? 'checked disabled' : '';
           $.each(data.all_permission,function (idx, item) {
             html +='<tr>'
           +  '<td><input type="checkbox" name="permission" '+checked+' class="form-check-input" value="' + item +'"></td>'
