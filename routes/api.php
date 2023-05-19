@@ -97,3 +97,6 @@ Route::get('/get_employee_list_no_account', [App\Http\Controllers\Api\EmployeeCo
 
 Route::get('/assign_user', [App\Http\Controllers\Api\EmployeeController::class, 'assignUser'])
 ->name('assign_user');
+
+Route::post('/update_shift', [App\Http\Controllers\Api\ShiftController::class, 'updateShift'])
+->name('update_shift');

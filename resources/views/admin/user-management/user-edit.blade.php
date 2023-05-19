@@ -48,7 +48,7 @@
               <div class="mt-2">
                 <button type="submit" class="btn btn-primary me-2">Save changes</button>
                 <a type="button" href="{{ route('admin-user-management')}}" class="btn btn-outline-secondary">Cancel</a>
-                <button type="submit" class="btn btn-warning me-2 float-end">Reset Password</button>
+                {{-- <button type="submit" class="btn btn-warning me-2 float-end">Reset Password</button> --}}
               </div>
             </form>
           </div>

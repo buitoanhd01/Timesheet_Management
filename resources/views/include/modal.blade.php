@@ -281,3 +281,84 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalShift" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="backDropModalTitle">Edit shift </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <input type="hidden" id="hidden_id" value="">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mb-1">
+            <label for="shift_name" class="form-label">Shift Name</label>
+            <input
+              type="text"
+              id="shift_name"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col mb-1">
+            <label for="shift_start" class="form-label">Shift Start Time</label>
+            <input
+              type="text"
+              id="shift_start"
+              class="form-control"
+            />
+          </div>
+          <div class="col mb-1">
+            <label for="shift_end" class="form-label">Shift End Time</label>
+            <input
+              type="text"
+              id="shift_end"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col mb-1">
+            <label for="rest_start" class="form-label">Rest Start</label>
+            <input
+              type="text"
+              id="rest_start"
+              class="form-control"
+            />
+          </div>
+          <div class="col mb-1">
+            <label for="rest_end" class="form-label">Rest End</label>
+            <input
+              type="text"
+              id="rest_end"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col mb-1">
+            <label for="overtime" class="form-label">Overtime Start</label>
+            <input
+              type="text"
+              id="overtime"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="btn_save_shift">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

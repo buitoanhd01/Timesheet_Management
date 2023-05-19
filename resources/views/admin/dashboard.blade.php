@@ -200,21 +200,21 @@
             <div class="carousel-item active" style="height: 250px">
               <img class="d-block w-100" src="../assets/img/elements/13.jpg" alt="First slide" />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Company Image</h3>
+                <h3></h3>
                 <p>Eos mutat malis maluisset et, agam ancillae quo te, in vim congue pertinacia.</p>
               </div>
             </div>
             <div class="carousel-item" style="height: 250px">
               <img class="d-block w-100" src="../assets/img/elements/2.jpg" alt="Second slide" />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Company Image 2</h3>
+                <h3></h3>
                 <p>In numquam omittam sea.</p>
               </div>
             </div>
             <div class="carousel-item" style="height: 250px">
               <img class="d-block w-100" src="../assets/img/elements/18.jpg" alt="Third slide" />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Company Image 3</h3>
+                <h3></h3>
                 <p>Lorem ipsum dolor sit amet, virtute consequat ea qui, minim graeco mel no.</p>
               </div>
             </div>

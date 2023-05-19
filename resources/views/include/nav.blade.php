@@ -143,11 +143,11 @@
     <!-- Settings -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Settings</span></li>
     <!-- Settings -->
-    @if(auth()->user()->can('manage-setting'))
+    @if(auth()->user()->can('manage-shift'))
     <li class="menu-item">
-      <a href="{{ route('admin-position-management') }}" class="menu-link">
+      <a href="{{ route('admin-shift') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-cog"></i>
-        <div data-i18n="Settings">Settings</div>
+        <div data-i18n="Settings">Shift Management</div>
       </a>
     </li>
     @endif

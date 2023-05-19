@@ -18,7 +18,7 @@ function loadDashboard() {
         let html = '';
         let status = '';
         let item = data.attendance;
-        if (typeof item != 'undefined' || item == 'null') {
+        if (typeof item == 'undefined' || item == 'null') {
             html = '<tr><td>No Data</td></tr>';
           } else {
             let first_checkin = (item.first_checkin) ? item.first_checkin : '<span class="badge bg-label-info me-1">Not Yet Check In</span>';

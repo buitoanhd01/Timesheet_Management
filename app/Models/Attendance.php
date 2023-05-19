@@ -71,6 +71,7 @@ class Attendance extends Model
 
 
     public static function getWorkingHours($date, $data) {
+        $timeSchedule = Shift::getShiftEmployeeByID($data['employee_id']);
         $firstCheckIn = self::select('first_checkin')->where(['date'=> $date, 'employee_id' => $data['employee_id']])->value('first_checkin');
         if (isset($firstCheckIn) && isset($data['last_checkout'])) {
             if ($firstCheckIn != 'null' && $data['last_checkout'] != 'null') {
@@ -78,8 +79,8 @@ class Attendance extends Model
                 $data['last_checkout'] = date('H:i:s', strtotime($data['last_checkout']));
                 $checkInToTime = strtotime($firstCheckIn);
                 $checkOutToTime = strtotime($data['last_checkout']);
-                $lunchTimeStart = strtotime('12:00:00');
-                $lunchTimeEnd = strtotime('13:00:00');
+                $lunchTimeStart = strtotime($timeSchedule['shift_rest_time_start']);
+                $lunchTimeEnd = strtotime($timeSchedule['shift_rest_time_end']);
                 if ($checkInToTime > $lunchTimeStart || $checkOutToTime < $lunchTimeEnd) {
                     $timeRest = 0;
                 } else {
@@ -98,11 +99,12 @@ class Attendance extends Model
 
 
     public static function getOverTime($data) {
+        $timeSchedule = Shift::getShiftEmployeeByID($data['employee_id']);
         if (isset($data['last_checkout'])) {
             if ($data['last_checkout'] != 'null') {
                 $data['last_checkout'] = date('H:i:s', strtotime($data['last_checkout']));
                 $checkOutToTime = strtotime($data['last_checkout']);
-                $overTimeStart = strtotime('18:30:00');
+                $overTimeStart = strtotime($timeSchedule['time_start_overtime']);
                 if ($checkOutToTime >= $overTimeStart) {
                     $overTiming = $checkOutToTime - $overTimeStart;
                 } else {
@@ -121,8 +123,9 @@ class Attendance extends Model
 
 
     public static function getStatus($data) {
-        $timeArrivalLate = strtotime('08:30:00');
-        $timeLeaveEarly = strtotime('17:30:00');
+        $timeSchedule = Shift::getShiftEmployeeByID($data['employee_id']);
+        $timeArrivalLate = strtotime($timeSchedule['shift_start_time']);
+        $timeLeaveEarly = strtotime($timeSchedule['shift_start_end']);
         $status = 0;
         if (isset($data['first_checkin']) && $data['first_checkin'] != 'null') {
             $data['first_checkin'] = date('H:i:s', strtotime($data['first_checkin']));

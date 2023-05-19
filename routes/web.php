@@ -93,4 +93,10 @@ Route::group(['middleware' => ['auth', 'status']], function () {
         //Leave
         Route::get('/admin/request', [App\Http\Controllers\Admin\RequestController::class, 'index'])->name('admin-request');
     });
+
+    Route::group(['middleware' => ['permission:manage-shift']], function () {
+        //Shift
+        Route::get('/admin/shift', [App\Http\Controllers\Admin\ShiftController::class, 'index'])->name('admin-shift');
+        Route::get('/admin/shift/list', [App\Http\Controllers\Admin\ShiftController::class, 'getAllListShifts']);
+    });
 });
