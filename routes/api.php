@@ -29,6 +29,9 @@ Route::post('/update_list_calendar', [App\Http\Controllers\Api\CalendarControlle
 Route::get('/get_self_check_status', [App\Http\Controllers\Api\CalendarController::class, 'getSelfAttendanceNow'])
 ->name('get_self_check_status');
 
+Route::post('/update_attendance', [App\Http\Controllers\Api\CalendarController::class, 'updateAttendance'])
+->name('update_attendance');
+
 Route::get('/get_user_list', [App\Http\Controllers\Api\UserController::class, 'getListUsers'])
 ->name('get_user_list');
 
@@ -100,3 +103,9 @@ Route::get('/assign_user', [App\Http\Controllers\Api\EmployeeController::class, 
 
 Route::post('/update_shift', [App\Http\Controllers\Api\ShiftController::class, 'updateShift'])
 ->name('update_shift');
+
+Route::post('/update_request_leave', [App\Http\Controllers\Api\RequestController::class, 'updateRequest'])
+->name('update_request_leave');
+
+Route::post('/delete_request', [App\Http\Controllers\Api\RequestController::class, 'deleteRequest'])
+->name('delete_request');

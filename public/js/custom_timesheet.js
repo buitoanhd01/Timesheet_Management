@@ -74,7 +74,7 @@
                 case 4:
                   status = '<td class="text-center"><span class="badge bg-label-infor me-1">Leaved</span></td>';
               }
-              let note = (item.notes) ? '<td class="text-center"><button data-note="' + item.notes +'" class="btn btn-primary">Note</button></td>' : '<td></td>';
+              let note = '<td class="text-center"><button data-id="' + item.id +'" data-check-in="' + item.first_checkin +'" data-check-out="' + item.last_checkout +'" class="btn btn-info btn-edit-timesheet">Edit</button></td>';
               let employee_code = (item.employee_code) ? item.employee_code : '<span class="badge bg-label-danger me-1">Deleted</span>';
               let full_name = (item.full_name) ? item.full_name : '<span class="badge bg-label-danger me-1">Deleted</span>'
               html += '<tr>'
@@ -101,6 +101,16 @@
       });
     }
 
+    $(document).on('click', '.btn-edit-timesheet', function(e) { 
+      let id = $(this).data('id');
+      let check_in = $(this).data('check-in');
+      let check_out = $(this).data('check-out');
+      $('#check_in').val(check_in);
+      $('#check_out').val(check_out);
+      $('#attendance_id').val(id);
+      $('#modalEditTime').modal('show');
+      
+    });
     $(document).on('click', '.btn-filter-click', function(e) {
       let dataFilter = $(this).data('status');
       $('.btn-filter-click').removeClass('active');
@@ -117,5 +127,61 @@
       let dateFilter = $('#calendar_datepicker').val();
       let searchValue = $('#search_text').val();
       loadTable(current_tab, dateFilter, searchValue, dataFilter);
+    });
+
+    $(document).on('click', '#submit-edit-attendance', function(e) {
+      let id =$('#attendance_id').val();
+      let check_in = $('#check_in').val();
+      let check_out = $('#check_out').val();
+      var regex = /^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+      if (!regex.test(check_in)) {
+          $('#check_in').addClass('invalid');
+          return
+      } else {
+          $('#check_in').removeClass('invalid');
+      }
+      if (!regex.test(check_out)) {
+        $('#check_out').addClass('invalid');
+        return
+      } else {
+          $('#check_out').removeClass('invalid');
+      }
+      $.ajax({
+        url: '/api/update_attendance', // đường dẫn tới tệp JSON trên máy chủ
+        method: 'POST',
+        dataType: 'json', // định dạng dữ liệu là JSON
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+          id: id,
+          check_in: check_in,
+          check_out: check_out
+        },
+        beforeSend: function(){
+          $('.loading-effect').show();
+        },
+        success: function(data) {
+          $('.loading-effect').hide();
+          $('#modalEditTime').modal('hide');
+          let current_tab = $('.calendar-tab.active').data('tab');
+          let dateFilter = $('#calendar_datepicker').val();
+          let searchValue = $('#search_text').val();
+          let dataFilter = $('.btn-filter-click.active').data('status');
+          loadTable(current_tab, dateFilter, searchValue, dataFilter);
+          Swal.fire({
+            position: 'middle',
+            icon: 'success',
+            title: 'Successfully!',
+            showConfirmButton: false,
+            timer: 1000
+          })
+        },
+        error: function() {
+          // Xử lý lỗi khi tải dữ liệu thất bại
+          alert('Lỗi khi tải dữ liệu');
+          $('.loading-effect').hide();
+        }
+      });
     });
 })(jQuery);

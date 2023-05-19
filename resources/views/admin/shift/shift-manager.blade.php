@@ -14,11 +14,11 @@
             <a class="nav-link shift-tab active" data-tab="schedule"
               ><i class="bx bx-alarm me-1"></i> Shift Schedule</a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link shift-tab" data-tab="request"
             ><i class="bx bx-bell me-1"></i> Shift Request</a
           >
-        </li>
+        </li> --}}
         {{-- <div>
           <input type="text" class="custom-datepicker text-center" id="calendar_datepicker" value="{{ date('Y/m') }}" name="calendar-datepicker" autocomplete="off"/>
         </div> --}}

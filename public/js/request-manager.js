@@ -36,16 +36,16 @@
                         break;
                     }
                     switch (item.leave_type) {
-                      case 0:
+                      case 1:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">Paid Leave</span></td>';
                         break;
-                      case 1:
+                      case 2:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">No Paid Leave</span></td>';
                         break;
-                      case 2:
+                      case 3:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">Sick Leave</span></td>';
                         break;
-                      case 3:
+                      case 4:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">Maternity Leave</span></td>';
                         break;
                     }

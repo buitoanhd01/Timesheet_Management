@@ -55,4 +55,25 @@ class RequestController extends Controller
             return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
         return response()->json(['status_code' => 400, 'message' => 'FAILED'] ,400);
     }
+
+    public function updateRequest(Request $request)
+    {
+        $param = $request->all();
+        $leave = Leave::find($param['id']);
+        $leave->leave_date_start = $param['start_date'];
+        $leave->leave_date_end   = $param['end_date'];
+        $leave->reason           = $param['reason'];
+        $leave->leave_type       = $param['leave_type'];
+        $leave->status           = 0;
+        $leave->save();
+        return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
+    }
+
+    public function deleteRequest(Request $request)
+    {
+        $param = $request->all();
+        $leave = Leave::find($param['id']);
+        $leave->delete();
+        return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
+    }
 }

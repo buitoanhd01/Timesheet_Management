@@ -261,7 +261,7 @@
       </div>
       <div class="modal-body">
         <form>
-          <input type="hidden" id="employee_id_hidden" value="">
+          <input type="hidden" id="attendance_id" value="">
           <div class="form-group mb-3">
             <label for="check_in" class="form-label">Check In:</label>
             <input type="text" class="form-control" id="check_in" placeholder="Check In">
@@ -360,5 +360,53 @@
         <button type="button" class="btn btn-primary" id="btn_save_shift">Save</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditRequest" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leaveRequestModalLabel">Leave Request</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" id="hidden_id" value="">
+          <div class="form-group mb-3">
+            <label for="leave_type" class="form-label">Leave Type:</label>
+            <select class="form-control" id="leave_type">
+              <option value="1">Paid Leave</option>
+              <option value="2">No Paid Leave</option>
+              <option value="3">Sick Leave</option>
+              <option value="4">Maternity Leave</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="start_date" class="form-label">Start Time:</label>
+            <input type="text" class="form-control datepicker" id="start_date" placeholder="Start Time">
+          </div>
+          <div class="form-group mb-3">
+            <label for="end_date" class="form-label">End Time:</label>
+            <input type="text" class="form-control datepicker" id="end_date" placeholder="End Time">
+          </div>
+          <div class="form-group mb-3">
+            <label for="reason" class="form-label">Reason:</label>
+            <textarea class="form-control" id="reason" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="edit-leave-request">Send Request</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -134,4 +134,26 @@ class CalendarController extends Controller
             return response()->json(['attendance' => $attendance, 'attendance_by_month' => $attendanceByMonth, 'wrong_time' => $wrong_time] ,200);
         return response()->json(['status_code' => 401, 'message' => 'No DATA'] ,200);
     }
+
+    public function updateAttendance(Request $request)
+    {
+        $param = $request->all();
+        $attendance = Attendance::find($param['id']);
+        $date = date('Y-m-d', strtotime($attendance->first_checkin));
+        $hour_checkin = date('H:i:s', strtotime($param['check_in']));
+        $hour_checkout = date('H:i:s', strtotime($param['check_out']));
+        $check_in = date('Y-m-d H:i:s', strtotime($date . ' ' . $hour_checkin));
+        $check_out = date('Y-m-d H:i:s', strtotime($date . ' ' . $hour_checkout));
+        $working_hours = Attendance::getWorkingHoursByTime($check_in, $check_out, $attendance->employee_id);
+        $overtime = Attendance::getOverTimeByTime($check_out, $attendance->employee_id);
+        $status = Attendance::getStatusByTime($check_in, $check_out, $attendance->employee_id, $date);
+        $attendance->first_checkin = $check_in;
+        $attendance->last_checkout = $check_out;
+        $attendance->working_hours = $working_hours;
+        $attendance->overtime      = $overtime;
+        $attendance->status        = $status;
+
+        $attendance->save();
+        return response()->json(['status_code' => 200, 'message' => 'SUCCESS'] ,200);
+    }
 }

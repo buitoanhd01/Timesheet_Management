@@ -24,6 +24,7 @@
                   html = '<tr><td>No Data</td></tr>';
                 } else {
                   $.each(data.list_requests,function (idx, item) {
+                    let disabled = (item.status != 0) ? 'disabled' : '';
                     switch (item.status) {
                       case 0:
                         status = '<td class="text-center"><span class="badge bg-label-warning me-1">Pending</span></td>';
@@ -36,16 +37,16 @@
                         break;
                     }
                     switch (item.leave_type) {
-                      case 0:
+                      case 1:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">Paid Leave</span></td>';
                         break;
-                      case 1:
+                      case 2:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">No Paid Leave</span></td>';
                         break;
-                      case 2:
+                      case 3:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">Sick Leave</span></td>';
                         break;
-                      case 3:
+                      case 4:
                         type = '<td class="text-center"><span class="badge bg-label-info me-1">Maternity Leave</span></td>';
                         break;
                     }
@@ -61,14 +62,15 @@
                    + '<td>' + responded_by  + '</td>'
                    + status
                    + '<td>'
-                   +    '<a href="/admin/users/edit/' + item.id +'" class="btn btn-primary btn-sm btn-edit-custom">Edit</a>'
-                   +    '<button type="button" class="btn btn-danger btn-sm ms-1 me-1 btn-delete-user" data-id="' + item.id +'">Delete</button>'
+                   +    '<button '+disabled+' data-id="'+item.id+'" data-leave-type="'+item.leave_type+'" data-start-time="'+item.leave_date_start+'" data-end-time="'+item.leave_date_end+'" data-reason="'+item.reason+'" type="button" class="btn btn-primary btn-sm btn-edit-request">Edit</button>'
+                   +    '<button '+disabled+' type="button" class="btn btn-danger btn-sm ms-1 me-1 btn-delete-request" data-id="' + item.id +'">Delete</button>'
                    + '</td>'
                    + '</tr>'
                   });
                 }
                 $('#my_request').empty().html(html);
                 $('.loading-effect').hide();
+                emptyModal();
               },
               error: function() {
                 // Xử lý lỗi khi tải dữ liệu thất bại
@@ -77,6 +79,66 @@
               }
         });
       }
+
+      $(document).on('click', '.btn-edit-request', function(e) {
+        let id = $(this).data('id');
+        let leave_type = $(this).data('leave-type');
+        let leave_start = $(this).data('start-time');
+        let leave_end = $(this).data('end-time');
+        let reason = $(this).data('reason');
+        $('#modalEditRequest #leave_type').val(leave_type);
+        $('#modalEditRequest #start_date').val(leave_start);
+        $('#modalEditRequest #end_date').val(leave_end);
+        $('#modalEditRequest #reason').val(reason);
+        $('#modalEditRequest #hidden_id').val(id);
+        $('#modalEditRequest').modal('show');
+      });
+
+      $(document).on('click', '.btn-delete-request', function(e) {
+        let id = $(this).data('id');
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: '/api/delete_request', // đường dẫn tới tệp JSON trên máy chủ
+              method: 'POST',
+              dataType: 'json', // định dạng dữ liệu là JSON
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              data: {
+                id: id,
+              },
+              beforeSend: function(){
+                $('.loading-effect').show();
+              },
+              success: function(data) {
+                $('.loading-effect').hide();
+                loadTable();
+                Swal.fire({
+                  position: 'middle',
+                  icon: 'success',
+                  title: 'Successfully!',
+                  showConfirmButton: false,
+                  timer: 500
+                })
+              },
+              error: function() {
+                // Xử lý lỗi khi tải dữ liệu thất bại
+                alert('Lỗi khi tải dữ liệu');
+                $('.loading-effect').hide();
+              }
+            });
+          }
+        });
+      });
 
       $('#calendar_datepicker').on('change', function (){
         loadTable();
@@ -98,13 +160,17 @@
       submitLeaveRequest();
     });
 
+    $('#edit-leave-request').click(function(e) {
+      editLeaveRequest();
+    })
+
     function submitLeaveRequest() {
       // Lấy dữ liệu từ form
       var formData = {
-          'start_date': $('#start_date').val(),
-          'end_date': $('#end_date').val(),
-          'leave_type': $('#leave_type').val(),
-          'reason': $('#reason').val(),
+          'start_date': $('#modalRequest #start_date').val(),
+          'end_date': $('#modalRequest #end_date').val(),
+          'leave_type': $('#modalRequest #leave_type').val(),
+          'reason': $('#modalRequest #reason').val(),
       };
   
       // Kiểm tra tính hợp lệ của dữ liệu
@@ -157,6 +223,78 @@
           }
       });
   }
+
+  function emptyModal() {
+    $('#start_date').empty().val();
+    $('#end_date').empty().val();
+    $('#leave_type').val('1');
+    $('#reason').empty().val();
+    $('#hidden_id').empty().val();
+  }
+
+  function editLeaveRequest() {
+    // Lấy dữ liệu từ form
+    var formData = {
+        'start_date': $('#modalEditRequest #start_date').val(),
+        'end_date': $('#modalEditRequest #end_date').val(),
+        'leave_type': $('#modalEditRequest #leave_type').val(),
+        'reason': $('#modalEditRequest #reason').val(),
+        'id' : $('#modalEditRequest #hidden_id').val(),
+    };
+
+    // Kiểm tra tính hợp lệ của dữ liệu
+    if (formData.start_date == '') {
+        alert('Please insert start date!');
+        return false;
+    }
+    if (formData.end_date == '') {
+        alert('Please insert end date!');
+        return false;
+    }
+    if (formData.leave_type == '') {
+        alert('Please insert leave type!');
+        return false;
+    }
+    if (formData.reason == '') {
+        alert('Please insert reason leave!');
+        return false;
+    }
+
+    // Gửi dữ liệu đến server bằng Ajax
+    $.ajax({
+        type: 'POST',
+        url: '/api/update_request_leave',
+        data: formData,
+        dataType: 'json',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        encode: true,
+        beforeSend: function(){
+          $('.loading-effect').show();
+        },
+    })
+    .done(function(data) {
+        // Xử lý kết quả trả về từ server
+        if (data.status_code == 200) {
+            // Nếu thành công, hiển thị thông báo và đóng modal
+            $('#modalEditRequest').modal('hide');
+            Swal.fire({
+              position: 'middle',
+              icon: 'success',
+              title: 'Successfully!',
+              showConfirmButton: false,
+              timer: 500
+            })
+            setTimeout(function (){
+              loadTable();
+            },1000);
+        } else {
+            // Nếu thất bại, hiển thị thông báo lỗi
+            alert(data.message);
+        }
+    });
+}
   
   $('.datepicker').datepicker({
     format: "yyyy/mm/dd",

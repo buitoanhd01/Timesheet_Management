@@ -188,5 +188,91 @@ class Attendance extends Model
         if (isset($data))
             $data->delete();
     }
+
+    public static function getWorkingHoursByTime($firstCheckIn, $last_checkout, $employee_id) {
+        $timeSchedule = Shift::getShiftEmployeeByID($employee_id);
+        if (isset($firstCheckIn) && isset($last_checkout)) {
+            if ($firstCheckIn != 'null' && $last_checkout != 'null') {
+                $firstCheckIn = date('H:i:s', strtotime($firstCheckIn));
+                $last_checkout = date('H:i:s', strtotime($last_checkout));
+                $checkInToTime = strtotime($firstCheckIn);
+                $checkOutToTime = strtotime($last_checkout);
+                $lunchTimeStart = strtotime($timeSchedule['shift_rest_time_start']);
+                $lunchTimeEnd = strtotime($timeSchedule['shift_rest_time_end']);
+                $shiftEnd = strtotime($timeSchedule['shift_end_time']);
+                // dd($checkOutToTime - $checkInToTime);
+                if ($checkInToTime > $lunchTimeStart || $checkOutToTime < $lunchTimeEnd) {
+                    $timeRest = 0;
+                } else {
+                    $timeRest = (60 * 60);
+                }
+                if ($checkOutToTime > $shiftEnd) {
+                    $timeRest += 60*60;
+                }
+                $workingHours =$checkOutToTime - $checkInToTime - $timeRest;
+            } else {
+                $workingHours = 0;
+            }
+        } else {
+            $workingHours = 0;
+        }
+        return $workingHours / (60 * 60);
+    }
+
+
+
+    public static function getOverTimeByTime($last_checkout, $employee_id) {
+        $timeSchedule = Shift::getShiftEmployeeByID($employee_id);
+        if (isset($last_checkout)) {
+            if ($last_checkout != 'null') {
+                $last_checkout = date('H:i:s', strtotime($last_checkout));
+                $checkOutToTime = strtotime($last_checkout);
+                $overTimeStart = strtotime($timeSchedule['time_start_overtime']);
+                if ($checkOutToTime >= $overTimeStart) {
+                    $overTiming = $checkOutToTime - $overTimeStart;
+                } else {
+                    $overTiming = 0;
+                }
+            } else {
+                $overTiming = 0;
+            }
+        } else {
+            $overTiming = 0;
+        }
+        
+        return $overTiming / (60 * 60);
+    }
+
+
+
+    public static function getStatusByTime($firstCheckIn, $last_checkout, $employee_id, $date) {
+        $timeSchedule = Shift::getShiftEmployeeByID($employee_id);
+        $timeArrivalLate = strtotime($timeSchedule['shift_start_time']);
+        $timeLeaveEarly = strtotime($timeSchedule['shift_start_end']);
+        $status = 0;
+        if (isset($firstCheckIn) && $firstCheckIn != 'null') {
+            $firstCheckIn = date('H:i:s', strtotime($firstCheckIn));
+            $checkInToTime = strtotime($firstCheckIn);
+            if ($checkInToTime > $timeArrivalLate) {
+                $status = self::ARRIVAL_LATE;
+            }
+        }
+        if (isset($last_checkout) && $last_checkout != 'null') {
+            $last_checkout = date('H:i:s', strtotime($last_checkout));
+            $checkOutToTime = strtotime($last_checkout);
+            $statusTmp = self::select('status', 'first_checkin')->where(['date'=> $date, 'employee_id' => $employee_id])->first();
+            $checkInToTime = strtotime($statusTmp['first_checkin']);
+            if ($checkInToTime > $timeArrivalLate) {
+                $status = self::ARRIVAL_LATE;
+            }
+            if ($checkOutToTime < $timeLeaveEarly) {
+                $status = self::LEAVE_EARLY;
+            }
+            if ($checkInToTime > $timeArrivalLate && $checkOutToTime < $timeLeaveEarly) {
+                $status = self::BOTH;
+            }
+        }
+        return $status;
+    }
 }
 

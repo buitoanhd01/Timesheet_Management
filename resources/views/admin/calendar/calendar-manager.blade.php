@@ -53,7 +53,7 @@
         </div>
         <!-- timesheet day -->
         <div class="card">
-          <div class="table-responsive text-nowrap" id="vertical-example" style="max-height: 440px">
+          <div class="table-responsive text-nowrap" style="max-height: 440px">
             <table id="calendar-report" class="table">
               <thead class="sticky-top" style="background-color: #dee5ff">
                 <tr>
@@ -65,7 +65,7 @@
                   <th>Working Hours</th>
                   <th>Overtime</th>
                   <th class="text-center">Status</th>
-                  <th class="text-center">Note</th>
+                  <th class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody id="timesheet_infor">
