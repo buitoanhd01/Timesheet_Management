@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth', 'status']], function () {
         Route::get('/report/view', [App\Http\Controllers\Admin\ReportController::class, 'getReportAttendanceByID'])->name('employee-report-table');
         Route::get('/report/overtime', [App\Http\Controllers\Admin\ReportController::class, 'getReportOvertimeByID'])->name('employee-report-overtime');
         Route::get('/report/total', [App\Http\Controllers\Admin\ReportController::class, 'getReportTotalByID'])->name('employee-report-total');
+
+        Route::get('/shift', [App\Http\Controllers\Admin\ShiftController::class, 'myShift'])->name('my-shift');
+        Route::get('/shift/list', [App\Http\Controllers\Admin\ShiftController::class, 'getEmployeeShift']);
         
     });
 

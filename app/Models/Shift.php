@@ -54,8 +54,9 @@ class Shift extends Model
         return $dataShift;
     }
 
-    public static function getShiftEmployeeByID($id)
+    public static function getShiftEmployeeByID()
     {
+        $id = Employee::getCurrentEmployeeID();
         $dataShift = [];
         $dataShift = self::rightJoin('employees', function ($join) {
             $join->on('employees.id', '=', 'shifts.employee_id')

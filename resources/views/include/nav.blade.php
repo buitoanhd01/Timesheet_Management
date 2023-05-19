@@ -115,6 +115,16 @@
     </li>
     @endif
 
+    <!-- Request -->
+    @if(auth()->user()->can('using'))
+    <li class="menu-item">
+      <a href="{{ route('my-shift')}}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-briefcase-alt"></i>
+        <div data-i18n="my-report">My Shift</div>
+      </a>
+    </li>
+    @endif
+
     <!-- Other -->
     @if(auth()->user()->can('manage-department manage-position'))
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Others</span></li>

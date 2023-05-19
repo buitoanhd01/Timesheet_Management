@@ -23,4 +23,19 @@ class ShiftController extends Controller
         ])->render();
         return response()->json(['success' => true, 'html' => $html]);
     }
+
+    public function myShift()
+    {
+        return view('employee.shift.my-shift');
+    }
+
+    public function getEmployeeShift(Request $request)
+    {
+        $param = $request->all();
+        $listShift = Shift::getShiftEmployeeByID();
+        $html = view('employee.shift.shift-list', [
+            'list_shift' => $listShift
+        ])->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
 }
